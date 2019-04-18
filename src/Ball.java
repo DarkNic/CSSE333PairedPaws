@@ -4,6 +4,8 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+import util.Random;
+
 /**
  * A Ball is an abstract class that provides a default timePassed() and
  * getShape() implementations and several abstract methods that subclasses must
@@ -19,9 +21,14 @@ import java.awt.geom.Point2D;
  * @author Curt Clifton. Created Jan 22, 2011.
  */
 public abstract class Ball implements Drawable, Temporal, Relocatable {
-	private Point2D centerPoint;
+	private static final double MAX_VELOCITY = 2;
+	private static final double MIN_VELOCITY = 0.3;
+	
+	protected Point2D centerPoint;
 	private BallEnvironment world;
 
+	private boolean isPaused = false;
+	
 	/**
 	 * Constructs a new ball at location (0,0) in the given world.
 	 * 
@@ -43,6 +50,19 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 		this.centerPoint = centerPoint;
 	}
 
+	
+	
+	protected static double randomVelocity() {
+		double speed = Random.randInterval(MIN_VELOCITY, MAX_VELOCITY);
+		if (Math.random() > 0.7) {
+			return speed;
+		} else {
+			return -speed;
+		}
+	}
+	
+
+	
 	// -------------------------------------------------------------------------
 	// Utility accessors for subclasses
 
@@ -69,6 +89,9 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 
 	@Override
 	public void timePassed() {
+		if (this.isPaused) {
+			return;
+		}		
 		updateColor();
 		updateSize();
 		updatePosition();
@@ -76,18 +99,17 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 
 	@Override
 	public void die() {
-		// not yet implemented
+		this.world.removeBall(this);
 	}
 
 	@Override
 	public boolean getIsPaused() {
-		// not yet implemented
-		return false;
+		return this.isPaused;
 	}
 
 	@Override
 	public void setIsPaused(boolean isPaused) {
-		// not yet implemented
+		this.isPaused = isPaused;
 	}
 
 	// -------------------------------------------------------------------------
@@ -111,7 +133,7 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 	 */
 	@Override
 	public void moveTo(Point2D point) {
-		// not yet implemented
+		setCenterPoint(point);
 	}
 
 	/**
