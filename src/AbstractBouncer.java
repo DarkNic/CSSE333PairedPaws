@@ -86,10 +86,4 @@ public abstract class AbstractBouncer extends Ball {
 	public void updateColor() {
 		// does nothing
 	}
-
-	@Override
-	public double getDiameter() {
-		// does nothing
-		return 0;
-	}
 }

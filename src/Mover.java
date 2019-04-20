@@ -31,10 +31,8 @@ public class Mover extends Ball {
 		super.centerPoint.setLocation(super.centerPoint.getX(),
 				this.centerPoint.getY() + (this.velocity * Math.sin(this.angle)));// sets vertical speed
 		super.centerPoint.setLocation(super.getCenterPoint().getX(), super.getCenterPoint().getY());
-		Point2D.Double newCenter = new Point2D.Double(super.centerPoint.getX(), super.centerPoint.getY());// defines
-																											// speed
-																											// through a
-		// new point
+		Point2D.Double newCenter = new Point2D.Double(super.centerPoint.getX(), super.centerPoint.getY());
+		// defines speed through a new point
 		moveTo(newCenter);
 	}// Enacts speed for one timePassed()
 
@@ -46,7 +44,6 @@ public class Mover extends Ball {
 
 	@Override
 	public void updateColor() {
-//		this.color = Color.BLACK;// updates color to given color
 	}
 
 	@Override

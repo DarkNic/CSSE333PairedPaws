@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class ControlsPanel extends JPanel {
 	private static String[] BALL_NAMES = { "Pulsar", "Mover", "Bouncer",
-			"Exploder" };
+			"Extra","Exploder" };
 
 	/**
 	 * Constructs controls for the given world.
