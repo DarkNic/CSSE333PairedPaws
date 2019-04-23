@@ -8,13 +8,9 @@ public class Exploder extends AbstractBouncer {
 
 	private double finalSize;
 	private Color color = Color.MAGENTA;
-
 	private double radius;// initializes variables for center point, size of circle, max size of circle,
 							// color, window height and width, radius
-
 	private BallEnvironment aWorld;// initializes variable for aWorld
-
-	private int x;
 
 	public Exploder(BallEnvironment world) {
 		super(world);
@@ -22,7 +18,6 @@ public class Exploder extends AbstractBouncer {
 		this.radius = SIZE / 2;// Sets radius size
 		this.finalSize = Random.randInterval(Math.round(this.radius * this.radius * Math.PI * 2),
 				Math.round(this.radius * this.radius * Math.PI * 10));// Sets final circle size to a random
-		this.x=1;
 	} // size that is 2 to 10 times the size of the initial circle
 
 	public Exploder(BallEnvironment world, Point2D.Double origin) {
@@ -32,7 +27,6 @@ public class Exploder extends AbstractBouncer {
 		this.finalSize = Random.randInterval(Math.round(this.radius * this.radius * Math.PI * 2),
 				Math.round(this.radius * this.radius * Math.PI * 10));
 		// same constructor other than it taking a set center point
-		int x=1;
 	}
 
 	@Override
@@ -49,7 +43,7 @@ public class Exploder extends AbstractBouncer {
 					new Exploder(aWorld, new Point2D.Double(getCenterPoint().getX(), getCenterPoint().getY())));
 			this.aWorld.addBall(
 					new Exploder(aWorld, new Point2D.Double(getCenterPoint().getX(), getCenterPoint().getY())));
-																				// constructs 2 Exploder balls
+													// constructs 2 Exploder balls
 			die();// Destroys the initial Exploder Ball
 		} else {
 			this.radius += 0.03;// increases the size of the radius

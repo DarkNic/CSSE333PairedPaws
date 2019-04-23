@@ -1,5 +1,4 @@
 
-
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -23,12 +22,12 @@ import util.Random;
 public abstract class Ball implements Drawable, Temporal, Relocatable {
 	private static final double MAX_VELOCITY = 2;
 	private static final double MIN_VELOCITY = 0.3;
-	
+
 	protected Point2D centerPoint;
 	private BallEnvironment world;
 
 	private boolean isPaused = false;
-	
+
 	/**
 	 * Constructs a new ball at location (0,0) in the given world.
 	 * 
@@ -50,8 +49,6 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 		this.centerPoint = centerPoint;
 	}
 
-	
-	
 	protected static double randomVelocity() {
 		double speed = Random.randInterval(MIN_VELOCITY, MAX_VELOCITY);
 		if (Math.random() > 0.7) {
@@ -60,9 +57,7 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 			return -speed;
 		}
 	}
-	
 
-	
 	// -------------------------------------------------------------------------
 	// Utility accessors for subclasses
 
@@ -91,7 +86,7 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 	public void timePassed() {
 		if (this.isPaused) {
 			return;
-		}		
+		}
 		updateColor();
 		updateSize();
 		updatePosition();
@@ -148,10 +143,10 @@ public abstract class Ball implements Drawable, Temporal, Relocatable {
 
 	// -------------------------------------------------------------------------
 	// Abstract "template methods" that must be overridden by subclasses.
-	
+
 	/**
-	 * Updates the position of this object, if necessary, due to the passing of
-	 * a "moment" in time.
+	 * Updates the position of this object, if necessary, due to the passing of a
+	 * "moment" in time.
 	 */
 	public abstract void updatePosition();
 

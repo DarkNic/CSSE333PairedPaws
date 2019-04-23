@@ -1,5 +1,4 @@
 
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +13,7 @@ import javax.swing.JPanel;
  * @author Curt Clifton. Created Jan 22, 2011.
  */
 public class ControlsPanel extends JPanel {
-	private static String[] BALL_NAMES = { "Pulsar", "Mover", "Bouncer",
-			"Extra","Exploder" };
+	private static String[] BALL_NAMES = { "Pulsar", "Mover", "Bouncer", "Exploder", "Extra"};
 
 	/**
 	 * Constructs controls for the given world.
@@ -35,8 +33,7 @@ public class ControlsPanel extends JPanel {
 	 * Constructs a pause/resume toggle for the given temporal object.
 	 * 
 	 * @param temporalObj
-	 * @return a new button the toggles the pause/resume state of the given
-	 *         object.
+	 * @return a new button the toggles the pause/resume state of the given object.
 	 */
 	private JButton makePauseResumeButton(final Temporal temporalObj) {
 		final JButton pauseResumeButton = new JButton("Pause");
@@ -56,8 +53,7 @@ public class ControlsPanel extends JPanel {
 		};
 		pauseResumeButton.addActionListener(pauser);
 		Dimension preferredButtonSize = pauseResumeButton.getPreferredSize();
-		Dimension maxButtonSize = new Dimension(preferredButtonSize.width * 2,
-				preferredButtonSize.height);
+		Dimension maxButtonSize = new Dimension(preferredButtonSize.width * 2, preferredButtonSize.height);
 		pauseResumeButton.setMaximumSize(maxButtonSize);
 		return pauseResumeButton;
 	}

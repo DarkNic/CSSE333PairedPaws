@@ -12,9 +12,9 @@ public class Pulsar extends Ball {
 
 	public Pulsar(BallEnvironment world) {
 		super(world);
-		double x = Random.randRange(0,world.getSize().width);
-		double y = Random.randRange(0,world.getSize().height);
-		setCenterPoint(new Point2D.Double(x,y));
+		double x = Random.randRange(0, world.getSize().width);
+		double y = Random.randRange(0, world.getSize().height);
+		setCenterPoint(new Point2D.Double(x, y));
 		this.intensity = 0.0f;
 	}
 
@@ -29,13 +29,14 @@ public class Pulsar extends Ball {
 			this.intensity += INTENSITY_STEP;
 			if (this.intensity > 1.0f) {
 				this.intensity = 1.0f;
-				this.isIncreasing = !this.isIncreasing;//checks whether the intensity has reached the given value
+				this.isIncreasing = !this.isIncreasing;// checks whether the intensity has reached the given value
 			}
 		} else {
 			this.intensity -= INTENSITY_STEP;
 			if (this.intensity < 0.0f) {
 				this.intensity = 0.0f;
-				this.isIncreasing = !this.isIncreasing;//checks whether the intensity has reached the given value and reverses intensity growth of necessary
+				this.isIncreasing = !this.isIncreasing;// checks whether the intensity has reached the given value and
+														// reverses intensity growth of necessary
 			}
 		}
 	}
@@ -52,7 +53,6 @@ public class Pulsar extends Ball {
 
 	@Override
 	public double getDiameter() {
-		return SIZE;//returns current diameter of Ball
+		return SIZE;// returns current diameter of Ball
 	}
 }
-

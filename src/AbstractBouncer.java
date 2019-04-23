@@ -37,6 +37,7 @@ public abstract class AbstractBouncer extends Ball {
 		this.verticalDirection = 1;
 		this.horizontalDirection = 1;// Sets the initial value to the direction constants
 	}
+
 	public AbstractBouncer(BallEnvironment world, Point2D.Double origin) {
 		super(world);
 		this.windowH = world.getSize().getHeight();
@@ -44,7 +45,7 @@ public abstract class AbstractBouncer extends Ball {
 
 		this.newCenter = new Point2D.Double();
 		setCenterPoint(origin);// this is the same as the other constructor other than the center point is set
-											// at given origin
+								// at given origin
 		this.velocity = randomVelocity();
 		this.angle = Random.randInterval(0, Math.PI * 2);
 
@@ -52,6 +53,7 @@ public abstract class AbstractBouncer extends Ball {
 		this.horizontalDirection = 1;
 
 	}
+
 	public Point2D.Double getPosition() {
 		return this.newCenter;// returns the current position of the ball
 	}
@@ -73,7 +75,7 @@ public abstract class AbstractBouncer extends Ball {
 		} // changes the direction constant if it hits the vertical sides
 		super.centerPoint.setLocation(
 				super.centerPoint.getX() + (this.horizontalDirection * this.velocity * Math.cos(this.angle)),
-				super.centerPoint.getY() + (this.verticalDirection * this.velocity * Math.sin(this.angle))); 
+				super.centerPoint.getY() + (this.verticalDirection * this.velocity * Math.sin(this.angle)));
 		moveTo(super.centerPoint);
 	}// Enacts speed for one timePassed()
 

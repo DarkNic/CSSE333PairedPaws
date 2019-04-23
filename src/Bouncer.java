@@ -5,16 +5,16 @@ import util.Random;
 
 public class Bouncer extends AbstractBouncer {
 	private static final int SIZE = 30;
-	private Color color=Color.YELLOW;//Initializes color variable and diameter of circle
+	private Color color = Color.YELLOW;// Initializes color variable and diameter of circle
+
 	public Bouncer(BallEnvironment world) {
 		super(world);
 	}
 
 	@Override
 	public Color getColor() {
-		return this.color;//returns the current color
+		return this.color;// returns the current color
 	}
-
 
 	@Override
 	public void updateSize() {
@@ -29,7 +29,6 @@ public class Bouncer extends AbstractBouncer {
 
 	@Override
 	public double getDiameter() {
-		// TODO Auto-generated method stub
 		return SIZE;
 	}
 
