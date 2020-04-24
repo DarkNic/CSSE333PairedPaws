@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,7 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import util.Random;
+//import util.Random;
 
 /**
  * The starting point for the BallWorlds application.
@@ -52,6 +50,12 @@ public class Main {
 
 //		ArrayList<SimulationPanel> worlds = constructSimulations();
 
+
+		
+		int index=0;
+		ArrayList<Animal>petProfiles=new ArrayList<>();
+		petProfiles=createProfiles(new ArrayList<>());
+		
 		JMenuBar menu=new JMenuBar();
 		JMenu HomePage=new JMenu("Home");
 		JMenu wishList=new JMenu("Wish List");
@@ -116,7 +120,7 @@ public class Main {
 		profileFrame.add(doggy2);
 		doggy2.setBounds(25, 50,450,500);
 		
-		JLabel dogName= new JLabel("Ruff");
+		JLabel dogName= new JLabel(petProfiles.get(index).getName());
 		dogName.setFont(new Font("Verdana",1, 15));
 		profileFrame.add(dogName);
 		dogName.setBounds(200, 550, 50, 30);
@@ -135,6 +139,14 @@ public class Main {
 		JButton wishButton = new JButton("Add to Wish List");
 		profileFrame.add(wishButton);
 		wishButton.setBounds(350, 0, 130, 50);
+		
+		JButton rightNextButton = new JButton(">");
+		profileFrame.add(rightNextButton);
+		rightNextButton.setBounds(450, 550, 45, 45);
+		
+		JButton leftBackButton = new JButton("<");
+		profileFrame.add(leftBackButton);
+		leftBackButton.setBounds(0, 550, 45, 45);
 		
 		JPanel check=new ImagePanel(4);
 		profileFrame.add(check);
@@ -155,6 +167,22 @@ public class Main {
 //		frame.setVisible(true);
 
 		}
+
+	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
+		// this will probably be the area where the information is read in
+		Dog ruff=new Dog(10110);
+		ruff.setName("Ruff");
+		ruff.setAge(9);
+		ruff.setGender("Male");
+		ruff.setHouseTrained(true);
+		ruff.setNS(true);
+		arrayList.add(ruff);
+		
+		return arrayList;
+	}
+	
+	
+	
 
 	public static class ImagePanel extends JPanel{
 
@@ -190,6 +218,8 @@ public class Main {
 	       }
 	    }
 
+	    
+	    
 	    public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
 	        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
 	        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);

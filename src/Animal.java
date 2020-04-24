@@ -10,9 +10,33 @@ public abstract class Animal {
 	private boolean houseTrained; 
 	private String intakeDate;
 	
-	public Animal() {
+	public Animal(int animalID) {
+		this.animalID=animalID;
 	}
 	
 	public abstract void setInfo();
 	
+	public void setName(String name) {
+		this.name=name;
+	}
+	
+	public void setGender(String gender) {
+		this.gender=gender;
+	}
+	
+	public void setAge(int age) {
+		this.age=age;
+	}
+	
+	public void setNS(boolean ns) {
+		this.neutered_Spayed=ns;
+	}
+	
+	public void setHouseTrained(boolean yN) {
+		this.houseTrained=yN;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
 }
