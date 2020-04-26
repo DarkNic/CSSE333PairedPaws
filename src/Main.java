@@ -38,7 +38,7 @@ public class Main {
 	//this works, waiting to get guest user
 	public static void init() {
 		con = new ConnectionTHHS("golem.csse.rose-hulman.edu", "THHS_AS");
-		System.out.println(con.connect("SodaBaseUsermunrosl30","Password123") ? "Connected!" : "Failed to Connect.");
+		System.out.println(con.connect("THHS30","Password123") ? "Connected!" : "Failed to Connect.");
 	}
 	/**
 	 * Starts the application.
