@@ -8,6 +8,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -21,35 +24,35 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-//import util.Random;
-
-/**
- * The starting point for the BallWorlds application.
- * 
- * This exercise is based on one by David Mutchler, Salman Azhar and others at
- * Rose-Hulman Institute of Technology in January 2005. That exercise was itself
- * based on one from Lynn Andrea Stein's Rethinking CS101 project.
- * 
- * @author Curt Clifton. Created Jan 22, 2011.
- */
+import DB_connect.ConnectionTHHS;
+ 
 public class Main {
 	private static final int NUMBER_OF_SIMULATIONS = 3;
 	private static final int MAX_WIDTH = 600;
 	private static final int MAX_HEIGHT = 300;
 	private static final Color[] BACKGROUND_COLORS = { Color.RED,
 			Color.BLUE, Color.GREEN };
+	static ConnectionTHHS con;
 
+	
+	//this works, waiting to get guest user
+	public static void init() {
+		con = new ConnectionTHHS("golem.csse.rose-hulman.edu", "THHS_AS");
+		//System.out.println(con.connect("SodaBaseUsermunrosl30","Password123"));
+	}
 	/**
 	 * Starts the application.
 	 * 
 	 * @param args
 	 *            ignored
 	 */
+	
+	
 	public static void main(String[] args) {
 		//need to make own menu bar class and figure out the sub menu. Try: https://www.geeksforgeeks.org/java-swing-jmenubar/
 
 //		ArrayList<SimulationPanel> worlds = constructSimulations();
-
+		init();
 
 		
 		int index=0;
@@ -169,14 +172,27 @@ public class Main {
 		}
 
 	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
-		// this will probably be the area where the information is read in
-		Dog ruff=new Dog(10110);
-		ruff.setName("Ruff");
-		ruff.setAge(9);
-		ruff.setGender("Male");
-		ruff.setHouseTrained(true);
-		ruff.setNS(true);
-		arrayList.add(ruff);
+
+		CallableStatement getDogs = null;
+		ResultSet rs;
+		try {
+			getDogs = con.getConnection().prepareCall("{call GetInfo()}");
+			rs = getDogs.executeQuery();
+			
+			while(rs.next()) {
+				Dog ruff=new Dog(10110);
+				ruff.setName(rs.getString("petName"));
+				ruff.setAge(rs.getInt("age"));
+				ruff.setGender(rs.getString("gender"));
+				ruff.setHouseTrained(rs.getBoolean("houseTrained"));
+				ruff.setNS(rs.getBoolean("noSmallKids"));
+				arrayList.add(ruff);
+				//System.out.println(arrayList.get(0));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return arrayList;
 	}
