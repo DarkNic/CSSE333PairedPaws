@@ -183,7 +183,7 @@ sampleFrame.setVisible(true);
 		CallableStatement getDogs = null;
 		ResultSet rs;
 		try {
-			getDogs = con.getConnection().prepareCall("{call GetInfo()}");
+			getDogs = con.getConnection().prepareCall("{call GetPetInfo()}");
 			rs = getDogs.executeQuery();
 			
 			while(rs.next()) {

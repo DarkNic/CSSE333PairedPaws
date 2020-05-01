@@ -17,7 +17,6 @@ public class ConnectionTHHS {
 	
 	public boolean connect(String user, String pass) {
 		String connectionString = "jdbc:sqlserver://"+this.serverName+";databaseName="+this.databaseName+";user="+user+";password="+pass;
-		System.out.println(connectionString);
 		try {
 			connection = DriverManager.getConnection(connectionString);
 			return true;
