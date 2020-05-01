@@ -8,11 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class DBModifyingFrame  extends JFrame{
+public class SearchFrame extends JFrame{
 
-	//needs dynamic set up. Dialogues currently only have a jlabel in them but can be easily updated to take input from boxes and call stored procedures
-	
-	public DBModifyingFrame() {
+	public SearchFrame() {
+		constructFrame();
+		
+	}
+
+	private void constructFrame() {
+		//Make a similar search table to the lab although looking at DBModifyingFrame is pretty close as well		
 		this.setSize(1000, 1000);
 		String[] entities= new String[] {"None, Person, Cat, Dog"};
 		
@@ -99,6 +103,6 @@ public class DBModifyingFrame  extends JFrame{
 	public void createDogDialogue() {
 		DogDialouge dialouge=new DogDialouge();
 		this.add(dialouge);
-	}
 	
+	}
 }

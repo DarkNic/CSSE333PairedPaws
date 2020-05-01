@@ -101,7 +101,7 @@ public class Main {
 		JButton loginButton = new JButton("Login");
 		welcome.add(loginButton);
 		loginButton.setBounds(300, 750, 150, 75);
-
+		
 		JButton regsiterButton = new JButton("Register");
 		welcome.add(regsiterButton);
 		regsiterButton.setBounds(500, 750, 150, 75);	
