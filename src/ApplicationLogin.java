@@ -14,16 +14,21 @@ public class ApplicationLogin {
 	private static final Base64.Decoder dec = Base64.getDecoder();
 	
 	public boolean login(String uname, String pass) {
-		
+		//I need to write a stored proc for this
+		return false;
 	}
 	
 	public boolean register(String uname, String pass) {
 		String hash = hashPW(uname, pass);
 		try {
 			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Register(?,?,?,?,?,?)}");
+			cs.setString(2, uname);
+			//add more args and set statements
+			return true;
 		} catch (SQLException e) {
 			//error switcher here 
 		}
+		return false;
 	}
 	
 	public String hashPW(String uname, String pass) {
