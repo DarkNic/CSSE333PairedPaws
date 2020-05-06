@@ -2,7 +2,7 @@
 public abstract class Animal {
 
 	private String name;
-	private int age;
+	private String age;
 	private String gender;
 	private int animalID;
 	private boolean neutered_Spayed;
@@ -24,7 +24,7 @@ public abstract class Animal {
 		this.gender=gender;
 	}
 	
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age=age;
 	}
 	
