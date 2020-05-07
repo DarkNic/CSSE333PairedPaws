@@ -2,11 +2,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.swing.JOptionPane;
 
 public class ApplicationLogin {
 	
@@ -14,19 +16,53 @@ public class ApplicationLogin {
 	private static final Base64.Decoder dec = Base64.getDecoder();
 	
 	public boolean login(String uname, String pass) {
-		//I need to write a stored proc for this
+		CallableStatement getLog;
+		ResultSet rs;
+		try {
+			getLog = Main.con.getConnection().prepareCall("{call infoCheck()}");
+			rs = getLog.executeQuery();
+			String userChallenge = getLog.getString("username");
+			String passChallenge = getLog.getString("password");
+			
+			if(!uname.equals(userChallenge) || 
+					!hashPW(pass, uname).equals(passChallenge))
+				throw new SQLException();
+			
+			getLog.close();
+			return true;
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Login Failed");
+		}
+		
 		return false;
 	}
 	
-	public boolean register(String uname, String pass) {
+	public boolean register(String uname, String pass, String phone, String email, String addr, String zip) {
 		String hash = hashPW(uname, pass);
+		int ret = 0;
 		try {
 			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Register(?,?,?,?,?,?)}");
 			cs.setString(2, uname);
-			//add more args and set statements
+			cs.setString(3, hash);
+			cs.setString(4, phone);
+			cs.setString(5, email);
+			cs.setString(6, addr);
+			cs.setString(7, zip);
+			cs.execute();
+			ret = cs.getInt(1);
+			if(ret != 0)
+				throw new SQLException();
+			cs.close();
 			return true;
 		} catch (SQLException e) {
-			//error switcher here 
+			String error = "An error occured";
+			if(ret == 1)
+				error = "All fields are required. Please fill out the missing fields";
+			if(ret == 2)
+				error = "That username is already taken. Please try another.";
+			
+			JOptionPane.showMessageDialog(null, error);
+				
 		}
 		return false;
 	}

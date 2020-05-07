@@ -189,11 +189,11 @@ public class Main {
 				arrayList.add(ruff);
 				//System.out.println(ruff.getName());
 			}
-
+			getDogs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return arrayList;
 	}
 
