@@ -10,6 +10,8 @@ import com.sun.security.auth.UserPrincipal;
 
 
 
+
+
 public class LoginFrame extends JFrame{
 
 	public LoginFrame() {
@@ -21,13 +23,16 @@ public class LoginFrame extends JFrame{
 		JButton loginButton= new JButton("Login");
 		JLabel failLabel=new JLabel("Username or Password are invalid. Try Again");
 		
+		loginButton.setBounds(250, 450, 100, 50);
+
+		
 		this.add(userLabel);
 		this.add(userField);
 		this.add(passLabel);
 		this.add(passField);
 		this.add(failLabel);
 		this.add(loginButton);
-		
+	
 		failLabel.setVisible(false);
 		loginButton.addActionListener(new ActionListener() {
 			
@@ -46,6 +51,7 @@ public class LoginFrame extends JFrame{
 			}
 
 		});
+		
 	}
 	
 	private boolean attemptLogin(String text, String text2) {
