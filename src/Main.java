@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -95,6 +97,19 @@ public class Main {
 		welcome.add(loginButton);
 		loginButton.setBounds(300, 750, 150, 75);
 
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				LoginFrame fun=new LoginFrame();
+				fun.setJMenuBar(menu);
+
+				fun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fun.setVisible(true);
+			}
+		});
+		
 		JButton regsiterButton = new JButton("Register");
 		welcome.add(regsiterButton);
 		regsiterButton.setBounds(500, 750, 150, 75);
