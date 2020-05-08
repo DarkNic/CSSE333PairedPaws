@@ -93,7 +93,7 @@ public class ApplicationLogin {
 	
 	public static String hashPW(String uname, String pass) {
 		uname = uname.toLowerCase();
-		KeySpec spec = new PBEKeySpec(pass.toCharArray(), dec.decode(pass), 65536, 128); 
+		KeySpec spec = new PBEKeySpec(pass.toCharArray(), dec.decode(uname), 65536, 128); 
 		SecretKeyFactory f;
 		byte[] hash = null;
 		try {
