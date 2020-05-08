@@ -98,7 +98,6 @@ public class PetPage extends JComponent {
 		try {
 			makeGUI(curID, name, house, fixed, stage, intake, gender, age, size);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -112,7 +111,7 @@ public class PetPage extends JComponent {
 
 		JButton wishButton = new JButton("Add to Wish List");
 		this.add(wishButton);
-		wishButton.setBounds(345,20, 40, 40);
+		wishButton.setBounds(350, 10, 125, 40);
 
 		JButton rightNextButton = new JButton(">");
 		rightNextButton.addMouseListener(new MouseAdapter() {
@@ -128,6 +127,17 @@ public class PetPage extends JComponent {
 		this.add(leftBackButton);
 		leftBackButton.setBounds(10, 619, 45, 45);
 
+		leftBackButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				counter -= 2;
+				if (counter < 0) {
+					counter = max -1;
+				}
+				loadNext();
+			}
+		});
+
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
 		String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
@@ -141,7 +151,7 @@ public class PetPage extends JComponent {
 
 		bioOfAnimal.setBackground(Color.RED);
 		add(bioOfAnimal);
-		bioOfAnimal.setBounds(154, 432, 173, 322);
+		bioOfAnimal.setBounds(154, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
