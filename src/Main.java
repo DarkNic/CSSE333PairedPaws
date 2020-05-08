@@ -53,7 +53,7 @@ public class Main {
 
 		// ArrayList<SimulationPanel> worlds = constructSimulations();
 		init();
-
+		
 		JMenuBar menu = new JMenuBar();
 		JMenu HomePage = new JMenu("Home");
 		JMenu wishList = new JMenu("Wish List");

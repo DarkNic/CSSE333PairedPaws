@@ -27,7 +27,7 @@ public class IntroFrame extends JFrame{
 	}
 	
 	public IntroFrame() {
-		this.setTitle("UserName");
+		this.setTitle("PetPage");
 		
 		
 		JMenuBar menu=new JMenuBar();
