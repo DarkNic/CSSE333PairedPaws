@@ -125,8 +125,6 @@ public class Main {
 				fun.setVisible(true);
 			}
 		});
-		// _________________________________________________________________________________________
-		// Profile Page
 	}
 
 	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
