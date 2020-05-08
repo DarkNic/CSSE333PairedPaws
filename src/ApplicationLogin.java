@@ -4,6 +4,7 @@ import java.security.spec.KeySpec;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
@@ -15,7 +16,8 @@ public class ApplicationLogin {
 	private static final Base64.Encoder enc = Base64.getEncoder();
 	private static final Base64.Decoder dec = Base64.getDecoder();
 	
-	public boolean login(String uname, String pass) {
+	public static boolean login(String uname, String pass) {
+		uname = uname.toLowerCase();
 		CallableStatement getLog;
 		ResultSet rs;
 		try {
@@ -37,11 +39,19 @@ public class ApplicationLogin {
 		return false;
 	}
 	
-	public boolean register(String uname, String pass, String phone, String email, String addr, String zip) {
-		String hash = hashPW(uname, pass);
+	public static boolean register(String uname, String pass, String phone, 
+			String email, String addr, String zip, String name) {
+		uname = uname.toLowerCase();
+		String hash = "";
+		try {
+			hash = hashPW(uname, pass);
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null, "Registration Failed");
+		}
 		int ret = 0;
 		try {
 			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Register(?,?,?,?,?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
 			cs.setString(2, uname);
 			cs.setString(3, hash);
 			cs.setString(4, phone);
@@ -55,6 +65,7 @@ public class ApplicationLogin {
 			cs.close();
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			String error = "An error occured";
 			if(ret == 1)
 				error = "All fields are required. Please fill out the missing fields";
@@ -67,7 +78,7 @@ public class ApplicationLogin {
 		return false;
 	}
 	
-	public String hashPW(String uname, String pass) {
+	public static String hashPW(String uname, String pass) {
 		
 		KeySpec spec = new PBEKeySpec(pass.toCharArray(), dec.decode(pass), 65536, 128); 
 		SecretKeyFactory f;

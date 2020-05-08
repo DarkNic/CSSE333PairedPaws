@@ -110,80 +110,23 @@ public class Main {
 			}
 		});
 		
-		JButton regsiterButton = new JButton("Register");
-		welcome.add(regsiterButton);
-		regsiterButton.setBounds(500, 750, 150, 75);
+		JButton registerButton = new JButton("Register");
+		welcome.add(registerButton);
+		registerButton.setBounds(500, 750, 150, 75);
+		registerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				RegisterFrame fun=new RegisterFrame();
+				fun.setJMenuBar(menu);
+
+				fun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fun.setVisible(true);
+			}
+		});
 		// _________________________________________________________________________________________
 		// Profile Page
-
-		IntroFrame sampleFrame = new IntroFrame();
-		sampleFrame.setSize(1000, 1000);
-		sampleFrame.setLayout(null);
-		sampleFrame.setJMenuBar(menu);
-
-		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		sampleFrame.setVisible(true);
-
-		// JFrame profileFrame=new JFrame("UserName");
-		// profileFrame.setSize(500, 1000);
-		// profileFrame.setLayout(null);
-		// profileFrame.setJMenuBar(menu);
-		// profileFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// profileFrame.setVisible(true);
-		//
-		//
-		// JPanel doggy2=new ImagePanel(2);
-		// profileFrame.add(doggy2);
-		// doggy2.setBounds(25, 50,450,500);
-		//
-		// JLabel dogName= new JLabel(petProfiles.get(index).getName());
-		// dogName.setFont(new Font("Verdana",1, 15));
-		// profileFrame.add(dogName);
-		// dogName.setBounds(200, 550, 50, 30);
-		//
-		// //I will need to put together a program that will make a new string from the
-		// input.
-		// //It will count up to the nearest space to the width of the bio and insert a
-		// <br/> at that point.
-		// //Then they will continue to loop through the string
-		// JLabel bioOfAnimal= new JLabel(("<html><div style='text-align:
-		// center;'>"+"<html>Age: 5 <br/> "
-		// + "Gender: Male <br/>"
-		// + "etc:...<br/>"
-		// + "Bio:<br/>Hi there! My name is ruff and I am adorable. That's all you need
-		// to know.</html>"+"</div></html>"));
-		// bioOfAnimal.setFont(new Font("Verdana",1, 15));
-		// profileFrame.add(bioOfAnimal);
-		// bioOfAnimal.setBounds(50, 575, 350, 140);
-		//
-		// JButton wishButton = new JButton("Add to Wish List");
-		// profileFrame.add(wishButton);
-		// wishButton.setBounds(350, 0, 130, 50);
-		//
-		// JButton rightNextButton = new JButton(">");
-		// profileFrame.add(rightNextButton);
-		// rightNextButton.setBounds(450, 550, 45, 45);
-		//
-		// JButton leftBackButton = new JButton("<");
-		// profileFrame.add(leftBackButton);
-		// leftBackButton.setBounds(0, 550, 45, 45);
-		//
-		// JPanel check=new ImagePanel(4);
-		// profileFrame.add(check);
-		// check.setBounds(250, 750,150,150);
-		//
-		//
-		// JPanel xMark=new ImagePanel(5);
-		// profileFrame.add(xMark);
-		// xMark.setBounds(25, 750,150,150);
-		//
-		// Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-		// bioOfAnimal.setBorder(border);
-
-		// JFrame frame = new BallWorldsFrame(worlds);
-		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// frame.setVisible(true);
-
 	}
 
 	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
