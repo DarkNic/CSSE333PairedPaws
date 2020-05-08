@@ -1618,3 +1618,4 @@ ASALocalRun/
 .localhistory/
 
 # End of https://www.gitignore.io/api/c,qt,vim,c++,java,node,xcode,latex,swift,linux,emacs,pydev,macos,maven,gradle,scheme,python,windows,eclipse,netbeans,intellij,xilinxise,objective-c,visualstudio,androidstudio,visualstudiocode
+/.classpath
