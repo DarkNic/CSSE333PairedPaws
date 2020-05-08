@@ -32,7 +32,6 @@ public class LoginFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				//System.out.println("Login");
 				if(attemptLogin(userField.getText(), passField.getText())) {
-					//Make a JFrame where a user can access pets
 					UserFrame user=new UserFrame(userField.getText());
 					closeFrame();
 				}

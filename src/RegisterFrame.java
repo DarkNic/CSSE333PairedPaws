@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 public class RegisterFrame extends JFrame{
 	
 	public RegisterFrame() {
-		this.setSize(150,450);
+		this.setSize(150,470);
 		this.setLayout(new FlowLayout());
 		JLabel userLabel=new JLabel("Username");
 		JLabel passLabel= new JLabel("Password");
@@ -58,7 +58,7 @@ public class RegisterFrame extends JFrame{
 				if(passField.getText().equals(confField.getText()) && 
 						attemptRegister(userField.getText(), passField.getText(),
 						phoneField.getText(), emailField.getText(), addrField.getText(),
-						zipField.getText())) {
+						zipField.getText(), nameField.getText())) {
 					closeFrame();
 				}
 			}

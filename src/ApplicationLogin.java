@@ -21,18 +21,21 @@ public class ApplicationLogin {
 		CallableStatement getLog;
 		ResultSet rs;
 		try {
-			getLog = Main.con.getConnection().prepareCall("{call infoCheck()}");
+			getLog = Main.con.getConnection().prepareCall("{call loginCheck(?)}");
+			getLog.setString(1, uname);
 			rs = getLog.executeQuery();
-			String userChallenge = getLog.getString("username");
-			String passChallenge = getLog.getString("password");
-			
+			rs.next();
+			String userChallenge = rs.getString("Username");
+			String passChallenge = rs.getString("password");
+
 			if(!uname.equals(userChallenge) || 
-					!hashPW(pass, uname).equals(passChallenge))
+					!hashPW(uname, pass).equals(passChallenge))
 				throw new SQLException();
 			
 			getLog.close();
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Login Failed");
 		}
 		
@@ -50,19 +53,29 @@ public class ApplicationLogin {
 		}
 		int ret = 0;
 		try {
-			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Register(?,?,?,?,?,?)}");
-			cs.registerOutParameter(1, Types.INTEGER);
-			cs.setString(2, uname);
-			cs.setString(3, hash);
-			cs.setString(4, phone);
-			cs.setString(5, email);
-			cs.setString(6, addr);
-			cs.setString(7, zip);
+			CallableStatement cs = Main.con.getConnection().prepareCall("{call Register(?,?,?)}");
+			//cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(1, uname);
+			cs.setString(2, hash);
+			cs.setString(3, name);	
 			cs.execute();
-			ret = cs.getInt(1);
+			//ret = cs.getInt(1);
 			if(ret != 0)
 				throw new SQLException();
 			cs.close();
+			
+			CallableStatement cs2 = Main.con.getConnection().prepareCall("{call RegisterContact(?,?,?,?,?) }");
+			cs2.setString(1, uname);
+			cs2.setString(2, phone);
+			cs2.setString(3, email);
+			cs2.setString(4, addr);
+			cs2.setString(5, zip);
+			cs2.execute();
+			
+			if(ret != 0)
+				throw new SQLException();
+			cs.close();
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,7 +92,7 @@ public class ApplicationLogin {
 	}
 	
 	public static String hashPW(String uname, String pass) {
-		
+		uname = uname.toLowerCase();
 		KeySpec spec = new PBEKeySpec(pass.toCharArray(), dec.decode(pass), 65536, 128); 
 		SecretKeyFactory f;
 		byte[] hash = null;
