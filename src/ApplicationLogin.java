@@ -53,25 +53,36 @@ public class ApplicationLogin {
 		}
 		int ret = 0;
 		try {
-			CallableStatement cs = Main.con.getConnection().prepareCall("{call Register(?,?,?)}");
-			//cs.registerOutParameter(1, Types.INTEGER);
-			cs.setString(1, uname);
-			cs.setString(2, hash);
-			cs.setString(3, name);	
+			if(uname.equals("") || pass.equals("") || 
+					phone.equals("") ||
+					email.equals("") ||
+					addr.equals("") ||
+					zip.equals("") ||
+					name.equals("")) {
+				ret = 1;
+				throw new SQLException();
+			}
+			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Register(?,?,?)}");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, uname.toString());
+			cs.setString(3, hash);
+			cs.setString(4, name);	
 			cs.execute();
-			//ret = cs.getInt(1);
+			ret = cs.getInt(1);
 			if(ret != 0)
 				throw new SQLException();
 			cs.close();
 			
-			CallableStatement cs2 = Main.con.getConnection().prepareCall("{call RegisterContact(?,?,?,?,?) }");
-			cs2.setString(1, uname);
-			cs2.setString(2, phone);
-			cs2.setString(3, email);
-			cs2.setString(4, addr);
-			cs2.setString(5, zip);
+			ret = 0;
+			CallableStatement cs2 = Main.con.getConnection().prepareCall("{? = call RegisterContact(?,?,?,?,?) }");
+			cs2.registerOutParameter(1, Types.INTEGER);
+			cs2.setString(2, uname.toString());
+			cs2.setString(3, phone);
+			cs2.setString(4, email);
+			cs2.setString(5, addr);
+			cs2.setString(6, zip);
 			cs2.execute();
-			
+			ret = cs2.getInt(1);
 			if(ret != 0)
 				throw new SQLException();
 			cs.close();

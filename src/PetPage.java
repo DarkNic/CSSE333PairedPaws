@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -28,6 +29,8 @@ import javax.swing.border.Border;
 
 import DB_connect.ConnectionTHHS;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -41,7 +44,7 @@ public class PetPage extends JComponent {
 	private ArrayList<Integer> ids;
 	int counter;
 	int max;
-	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>Age: 5 <br/> "
+	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>"
 			+ "Name: R1 <br/>" + "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>"
 			+ "Size: R7 <br/>" + "Age: R9 <br/>" + "</div></html>";
 
@@ -85,7 +88,7 @@ public class PetPage extends JComponent {
 				house = rs.getInt("houseTrained");
 				fixed = rs.getInt("fixed");
 				stage = rs.getString("stage");
-				intake = rs.getString("intakeDate");
+				intake = rs.getString("intakeDate").replace("00:00:00.0", "");
 				gender = rs.getInt("gender");
 				age = rs.getString("age");
 				size = rs.getString("size");
@@ -96,13 +99,13 @@ public class PetPage extends JComponent {
 		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
-			makeGUI(curID, name, house, fixed, stage, intake, gender, age, size);
+			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void makeGUI(int curID, String name, int house, int fixed, String stage, String intake, int gender,
+	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
 
 		JPanel doggy2 = new ImagePanel(curID);
@@ -110,8 +113,16 @@ public class PetPage extends JComponent {
 		doggy2.setBounds(25, 50, 450, 421);
 
 		JButton wishButton = new JButton("Add to Wish List");
+		wishButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+
+		});
 		this.add(wishButton);
-		wishButton.setBounds(350, 10, 125, 40);
+		wishButton.setBounds(340, 10, 150, 40);
 
 		JButton rightNextButton = new JButton(">");
 		rightNextButton.addMouseListener(new MouseAdapter() {
@@ -149,7 +160,7 @@ public class PetPage extends JComponent {
 		JLabel bioOfAnimal = new JLabel(hope);
 		bioOfAnimal.setOpaque(true);
 
-		bioOfAnimal.setBackground(Color.RED);
+		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(154, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
