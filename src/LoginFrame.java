@@ -37,6 +37,14 @@ public class LoginFrame extends JFrame{
 					Main.loggedUser = userField.getText();
 					user.setVisible(true);
 					closeFrame();
+					
+					
+					JFrame sampleFrame = new JFrame();
+					sampleFrame.setSize(600, 1000);
+					sampleFrame.setLayout(null);
+					sampleFrame.add(new PetPage(Main.con));
+					sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					sampleFrame.setVisible(true);
 				}
 			}
 

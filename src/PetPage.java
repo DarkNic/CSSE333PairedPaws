@@ -44,6 +44,9 @@ public class PetPage extends JComponent {
 	private ArrayList<Integer> ids;
 	int counter;
 	int max;
+	//had to put these here since actionlisteners can't reference local vars
+	int i;
+	String s;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>"
 			+ "Name: R1 <br/>" + "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>"
 			+ "Size: R7 <br/>" + "Age: R9 <br/>" + "</div></html>";
@@ -104,10 +107,12 @@ public class PetPage extends JComponent {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
-
+	
+		i = curID;
+		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
 		doggy2.setBounds(25, 50, 450, 421);
@@ -117,6 +122,7 @@ public class PetPage extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+
 				boolean logged = false;
 				if(!Main.loggedUser.equals("")) {
 					logged = true;
@@ -124,8 +130,8 @@ public class PetPage extends JComponent {
 					JOptionPane.showMessageDialog(null, "Please log in to add pets to your wishlist.");
 				}
 				
-				if(logged && WishListOperations.add(Main.loggedUser, curID)) {
-					JOptionPane.showMessageDialog(null, "Successfully added "+name+" to your wishlist!");
+				if(logged && WishListOperations.add(Main.loggedUser, i)) {
+					JOptionPane.showMessageDialog(null, "Successfully added "+s+" to your wishlist!");
 				}
 			}
 
