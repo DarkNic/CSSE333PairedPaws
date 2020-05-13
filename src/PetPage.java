@@ -117,7 +117,16 @@ public class PetPage extends JComponent {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				boolean logged = false;
+				if(!Main.loggedUser.equals("")) {
+					logged = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "Please log in to add pets to your wishlist.");
+				}
 				
+				if(logged && WishListOperations.add(Main.loggedUser, curID)) {
+					JOptionPane.showMessageDialog(null, "Successfully added "+name+" to your wishlist!");
+				}
 			}
 
 		});

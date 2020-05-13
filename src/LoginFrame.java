@@ -34,6 +34,7 @@ public class LoginFrame extends JFrame{
 				//System.out.println("Login");
 				if(attemptLogin(userField.getText(), passField.getText())) {
 					UserFrame user=new UserFrame(userField.getText());
+					Main.loggedUser = userField.getText();
 					user.setVisible(true);
 					closeFrame();
 				}
