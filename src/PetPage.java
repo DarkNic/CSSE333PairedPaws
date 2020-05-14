@@ -132,21 +132,25 @@ public class PetPage extends JComponent {
 			}
 
 		});
+		//Wish Button
 		this.add(wishButton);
 		wishButton.setBounds(357, 10, 118, 38);
-		JButton rightNextButton = new JButton(">");
+		
+		
+		JButton rightNextButton = new JButton("L💖VE");
 		rightNextButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				loadNext();
 			}
 		});
+		
 		this.add(rightNextButton);
-		rightNextButton.setBounds(441, 619, 45, 45);
+		rightNextButton.setBounds(337, 494, 138, 45);
 
 		JButton leftBackButton = new JButton("<");
 		this.add(leftBackButton);
-		leftBackButton.setBounds(10, 619, 45, 45);
+		leftBackButton.setBounds(23, 494, 121, 45);
 
 		leftBackButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -159,6 +163,7 @@ public class PetPage extends JComponent {
 			}
 		});
 
+		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
 		String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
