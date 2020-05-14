@@ -3,9 +3,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,24 +21,15 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.border.Border;
 
 import DB_connect.ConnectionTHHS;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 
 public class PetPage extends JComponent {
 	/**
@@ -83,9 +79,9 @@ public class PetPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
-			Statement state = scarlett.createStatement();
-			ResultSet rs = state.executeQuery("Select animalID, houseTrained,"
-					+ "fixed, stage, petName, intakeDate, gender, size, age From Pet Where " + "animalID =  " + curID);
+			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
+			state.setInt(1, curID);
+			ResultSet rs = state.executeQuery();
 			while (rs.next()) {
 				name = rs.getString("petName");
 				house = rs.getInt("houseTrained");
@@ -186,8 +182,8 @@ public class PetPage extends JComponent {
 	private void getAnimals() {
 		Connection scarlett = con.getConnection();
 		try {
-			Statement state = scarlett.createStatement();
-			ResultSet rs = state.executeQuery("Select AnimalID From Dog");
+			CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
+			ResultSet rs = state.executeQuery();
 			while (rs.next()) {
 				ids.add(rs.getInt("AnimalID"));
 			}
