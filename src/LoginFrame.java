@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginFrame extends JFrame{
@@ -17,7 +18,7 @@ public class LoginFrame extends JFrame{
 		JLabel userLabel=new JLabel("Username");
 		JLabel passLabel= new JLabel("Password");
 		JTextField userField=new JTextField(10);
-		JTextField passField=new JTextField(10);
+		JTextField passField=new JPasswordField(10);
 		JButton loginButton= new JButton("Login");
 		
 		this.add(userLabel);
@@ -33,7 +34,17 @@ public class LoginFrame extends JFrame{
 				//System.out.println("Login");
 				if(attemptLogin(userField.getText(), passField.getText())) {
 					UserFrame user=new UserFrame(userField.getText());
+					Main.loggedUser = userField.getText();
+					user.setVisible(true);
 					closeFrame();
+					
+					
+					JFrame sampleFrame = new JFrame();
+					sampleFrame.setSize(600, 1000);
+					sampleFrame.setLayout(null);
+					sampleFrame.add(new PetPage(Main.con));
+					sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					sampleFrame.setVisible(true);
 				}
 			}
 

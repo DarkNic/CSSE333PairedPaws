@@ -81,7 +81,7 @@ public class PetPageTest {
 		menu.add(wishList);
 		menu.add(account);
 		JFrame sampleFrame = new JFrame();
-		sampleFrame.setSize(1000, 1000);
+		sampleFrame.setSize(600, 1000);
 		sampleFrame.setLayout(null);
 		sampleFrame.setJMenuBar(menu);
 		sampleFrame.add(new PetPage(con));

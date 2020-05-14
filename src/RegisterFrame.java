@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class RegisterFrame extends JFrame{
@@ -22,8 +24,8 @@ public class RegisterFrame extends JFrame{
 		JLabel zipLabel = new JLabel("Zipcode");
 		
 		JTextField userField=new JTextField(10);
-		JTextField passField=new JTextField(10);
-		JTextField confField=new JTextField(10);
+		JTextField passField=new JPasswordField(10);
+		JTextField confField=new JPasswordField(10);
 		JTextField nameField = new JTextField(10);
 		JTextField phoneField=new JTextField(10);
 		JTextField emailField=new JTextField(10);
@@ -55,6 +57,9 @@ public class RegisterFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(!passField.getText().equals(confField.getText())) 
+					JOptionPane.showMessageDialog(null, "Password Fields must Match");
+				
 				if(passField.getText().equals(confField.getText()) && 
 						attemptRegister(userField.getText(), passField.getText(),
 						phoneField.getText(), emailField.getText(), addrField.getText(),

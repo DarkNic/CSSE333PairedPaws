@@ -3,9 +3,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,21 +21,15 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.border.Border;
 
 import DB_connect.ConnectionTHHS;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 
 public class PetPage extends JComponent {
 	/**
@@ -41,7 +40,10 @@ public class PetPage extends JComponent {
 	private ArrayList<Integer> ids;
 	int counter;
 	int max;
-	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>Age: 5 <br/> "
+	//had to put these here since actionlisteners can't reference local vars
+	int i;
+	String s;
+	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>"
 			+ "Name: R1 <br/>" + "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>"
 			+ "Size: R7 <br/>" + "Age: R9 <br/>" + "</div></html>";
 
@@ -77,15 +79,15 @@ public class PetPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
-			Statement state = scarlett.createStatement();
-			ResultSet rs = state.executeQuery("Select animalID, houseTrained,"
-					+ "fixed, stage, petName, intakeDate, gender, size, age From Pet Where " + "animalID =  " + curID);
+			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
+			state.setInt(1, curID);
+			ResultSet rs = state.executeQuery();
 			while (rs.next()) {
 				name = rs.getString("petName");
 				house = rs.getInt("houseTrained");
 				fixed = rs.getInt("fixed");
 				stage = rs.getString("stage");
-				intake = rs.getString("intakeDate");
+				intake = rs.getString("intakeDate").replace("00:00:00.0", "");
 				gender = rs.getInt("gender");
 				age = rs.getString("age");
 				size = rs.getString("size");
@@ -96,23 +98,42 @@ public class PetPage extends JComponent {
 		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
-			makeGUI(curID, name, house, fixed, stage, intake, gender, age, size);
+			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	private void makeGUI(int curID, String name, int house, int fixed, String stage, String intake, int gender,
+	
+	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
-
+	
+		i = curID;
+		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
 		doggy2.setBounds(25, 50, 450, 421);
 
 		JButton wishButton = new JButton("Add to Wish List");
+		wishButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				boolean logged = false;
+				if(!Main.loggedUser.equals("")) {
+					logged = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "Please log in to add pets to your wishlist.");
+				}
+				
+				if(logged && WishListOperations.add(Main.loggedUser, i)) {
+					JOptionPane.showMessageDialog(null, "Successfully added "+s+" to your wishlist!");
+				}
+			}
+
+		});
 		this.add(wishButton);
 		wishButton.setBounds(357, 10, 118, 38);
-
 		JButton rightNextButton = new JButton(">");
 		rightNextButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -149,7 +170,7 @@ public class PetPage extends JComponent {
 		JLabel bioOfAnimal = new JLabel(hope);
 		bioOfAnimal.setOpaque(true);
 
-		bioOfAnimal.setBackground(Color.RED);
+		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(154, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
@@ -160,8 +181,8 @@ public class PetPage extends JComponent {
 	private void getAnimals() {
 		Connection scarlett = con.getConnection();
 		try {
-			Statement state = scarlett.createStatement();
-			ResultSet rs = state.executeQuery("Select AnimalID From Dog");
+			CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
+			ResultSet rs = state.executeQuery();
 			while (rs.next()) {
 				ids.add(rs.getInt("AnimalID"));
 			}

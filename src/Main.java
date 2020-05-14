@@ -33,6 +33,8 @@ public class Main {
 	private static final int MAX_HEIGHT = 300;
 	private static final Color[] BACKGROUND_COLORS = { Color.RED, Color.BLUE, Color.GREEN };
 	static ConnectionTHHS con;
+	
+	public static String loggedUser = "";
 
 	// this works, waiting to get guest user
 	public static void init() {
