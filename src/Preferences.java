@@ -93,7 +93,7 @@ public class Preferences extends JComponent {
 		sampleFrame.setLayout(null);
 		sampleFrame.setJMenuBar(menu);
 		sampleFrame.add(new PetPage(scarlett, query));
-		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		sampleFrame.setVisible(true);
 	}
 

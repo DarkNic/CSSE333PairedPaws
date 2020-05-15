@@ -200,7 +200,7 @@ public class PetPage extends JComponent {
 		sampleFrame.setSize(600, 1000);
 		sampleFrame.setLayout(null);
 		sampleFrame.add(new MatchPage(con, curID));
-		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		sampleFrame.setVisible(true);
 	}
 

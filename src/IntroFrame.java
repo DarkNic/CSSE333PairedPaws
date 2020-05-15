@@ -47,7 +47,7 @@ public class IntroFrame extends JFrame{
 		this.setSize(500, 1000);
 		this.setLayout(null);
 		this.setJMenuBar(menu);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 
 		

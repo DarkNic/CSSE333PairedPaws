@@ -166,7 +166,7 @@ editContactInfoButton.setBounds(600, 500, 50, 50);
 				
 				delFrame.add(panel2);
 
-				delFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				delFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				delFrame.setVisible(true);
 
@@ -261,7 +261,7 @@ editContactInfoButton.setBounds(600, 500, 50, 50);
 				
 				editFrame.add(panel3);
 
-				editFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				editFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				editFrame.setVisible(true);
 
@@ -328,7 +328,7 @@ editContactInfoButton.setBounds(600, 500, 50, 50);
 
 				sampleFrame.getContentPane().add(new Preferences());
 
-				sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				sampleFrame.setVisible(true);
 

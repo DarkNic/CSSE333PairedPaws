@@ -107,7 +107,7 @@ public class Main {
 				LoginFrame fun=new LoginFrame();
 				fun.setJMenuBar(menu);
 
-				fun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fun.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				fun.setVisible(true);
 			}
 		});
@@ -123,7 +123,7 @@ public class Main {
 				RegisterFrame fun=new RegisterFrame();
 				fun.setJMenuBar(menu);
 
-				fun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fun.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				fun.setVisible(true);
 			}
 		});
