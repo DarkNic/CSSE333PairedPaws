@@ -1,29 +1,108 @@
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Preferences extends JComponent {
+	private JRadioButton newest;
+	private JComponent header;
+	private JRadioButton dog_Butt;
+	private JRadioButton cat_Butt;
+	private JRadioButton oldest;
+	private JRadioButton male;
+	private JRadioButton female;
+	private JRadioButton fixed;
+	private JRadioButton breedable;
+	private JButton submit;
+	private boolean newbool;
+	private boolean dogbool;
+	private boolean catbool;
+	private boolean oldbool;
+	private boolean malebool;
+	private boolean fixedbool;
+	private boolean femalebool;
+	private boolean breedbool;
+
 	public Preferences() {
 		setBackground(Color.RED);
 		this.setSize(400, 400);
-
 		loadButtons();
+
+		submit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				getBools();
+
+				Connection scarlett = Main.con.getConnection();
+				try {
+					Statement state = scarlett.createStatement();
+					ResultSet rs = state.executeQuery("Select AnimalID From Dog");
+					while (rs.next()) {
+					}
+
+				} catch (SQLException f) {
+					f.printStackTrace();
+				}
+
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.add(new PetPage(scarlett));
+				sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				sampleFrame.setVisible(true);
+
+			}
+
+		});
+
+	}
+
+	private void getBools() {
+		newbool = newest.isSelected();
+		oldbool = oldest.isSelected();
+		dogbool = dog_Butt.isSelected();
+		catbool = cat_Butt.isSelected();
+		malebool = male.isSelected();
+		femalebool = female.isSelected();
+		fixedbool = fixed.isSelected();
+		breedbool = breedable.isSelected();
 
 	}
 
 	private void loadButtons() {
-		JRadioButton newest = new JRadioButton("Newest in First");
-		newest.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		newest.setBounds(198, 63, 145, 39);
-		add(newest);
-
-		JLabel header = new JLabel("Preferences Page");
+		header = new JLabel("Preferences Page");
 		header.setToolTipText("");
 		header.setBackground(new Color(255, 0, 0));
 		header.setForeground(Color.RED);
@@ -32,42 +111,48 @@ public class Preferences extends JComponent {
 		header.setBounds(121, 21, 264, 36);
 		add(header);
 
-		JRadioButton dog_Butt = new JRadioButton("Dogs");
+		newest = new JRadioButton("Newest in First");
+		newest.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		newest.setBounds(198, 63, 145, 39);
+		add(newest);
+
+		dog_Butt = new JRadioButton("Dogs");
 		dog_Butt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		dog_Butt.setBounds(51, 98, 145, 39);
 		add(dog_Butt);
 
-		JRadioButton inTakeDesc = new JRadioButton("Cats");
-		inTakeDesc.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		inTakeDesc.setBounds(51, 63, 145, 39);
-		add(inTakeDesc);
+		cat_Butt = new JRadioButton("Cats");
+		cat_Butt.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		cat_Butt.setBounds(51, 63, 145, 39);
+		add(cat_Butt);
 
-		JRadioButton oldest = new JRadioButton("Oldest In FIrst");
+		oldest = new JRadioButton("Oldest In FIrst");
 		oldest.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		oldest.setBounds(198, 98, 145, 39);
 		add(oldest);
 
-		JRadioButton male = new JRadioButton("Male");
+		male = new JRadioButton("Male");
 		male.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		male.setBounds(51, 159, 145, 39);
 		add(male);
 
-		JRadioButton female = new JRadioButton("Female");
+		female = new JRadioButton("Female");
 		female.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		female.setBounds(51, 200, 145, 39);
 		add(female);
 
-		JRadioButton fixed = new JRadioButton("Fixed");
+		fixed = new JRadioButton("Fixed");
 		fixed.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		fixed.setBounds(198, 159, 145, 39);
 		add(fixed);
 
-		JRadioButton breedable = new JRadioButton("Breedable");
+		breedable = new JRadioButton("Breedable");
 		breedable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		breedable.setBounds(198, 200, 145, 39);
 		add(breedable);
 
-		JButton submit = new JButton("Submit");
+		submit = new JButton("Submit");
+
 		submit.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		submit.setBounds(25, 245, 360, 44);
 		add(submit);

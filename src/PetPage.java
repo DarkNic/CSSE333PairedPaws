@@ -38,7 +38,7 @@ public class PetPage extends JComponent {
 	/**
 	 * @wbp.nonvisual location=73,274
 	 */
-	ConnectionTHHS con;
+	Connection con;
 	ArrayList<Dog> dogs;
 	private ArrayList<Integer> ids;
 	int counter;
@@ -51,17 +51,17 @@ public class PetPage extends JComponent {
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public PetPage(ConnectionTHHS con) {
-		init(con);
+	public PetPage(Connection scarlett) {
+		init(scarlett);
 		getAnimals();
 		this.max = ids.size();
 		loadNext();
 	}
 
-	private void init(ConnectionTHHS con) {
+	private void init(Connection scarlett) {
 		this.setName("Find Your Furry Friend");
 		this.setSize(496, 794);
-		this.con = con;
+		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();
 		this.ids = new ArrayList<Integer>();
 		this.counter = 0;
@@ -73,7 +73,7 @@ public class PetPage extends JComponent {
 			counter = 0;
 		}
 		curID = ids.get(counter);
-		Connection scarlett = con.getConnection();
+		Connection scarlett = con;
 		String name = null;
 		int house = 0;
 		int fixed = 0;
@@ -141,7 +141,7 @@ public class PetPage extends JComponent {
 		this.add(wishButton);
 		wishButton.setBounds(357, 10, 118, 38);
 
-		JButton rightNextButton = new JButton("L♥️VE");
+		JButton rightNextButton = new JButton("LOVE");
 		rightNextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -203,7 +203,7 @@ public class PetPage extends JComponent {
 	}
 
 	private void getAnimals() {
-		Connection scarlett = con.getConnection();
+		Connection scarlett = con;
 		try {
 			CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
 			ResultSet rs = state.executeQuery();

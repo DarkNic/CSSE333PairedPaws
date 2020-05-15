@@ -38,7 +38,7 @@ public class MatchPage extends JComponent {
 	/**
 	 * @wbp.nonvisual location=73,274
 	 */
-	ConnectionTHHS con;
+	Connection con;
 	// had to put these here since actionlisteners can't reference local vars
 	int i;
 	String s;
@@ -47,22 +47,22 @@ public class MatchPage extends JComponent {
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public MatchPage(ConnectionTHHS con, int animalID) {
+	public MatchPage(Connection con2, int animalID) {
 		this.curID = animalID;
 		System.out.println("Curry: " + curID);
-		init(con);
+		init(con2);
 		loadNext();
 	}
 
-	private void init(ConnectionTHHS con) {
+	private void init(Connection con2) {
 		this.setName("Matched!");
 		this.setSize(496, 794);
-		this.con = con;
+		this.con = con2;
 	}
 
 	private void loadNext() {
 
-		Connection scarlett = con.getConnection();
+		Connection scarlett = con;
 		String name = null;
 		int house = 0;
 		int fixed = 0;
