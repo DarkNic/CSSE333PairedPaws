@@ -104,7 +104,7 @@ public class PetPage extends JComponent {
 		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
-			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age,
+			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
 					size);
 		} catch (IOException e) {
 			e.printStackTrace();
