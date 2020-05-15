@@ -141,7 +141,7 @@ public class PetPage extends JComponent {
 		});
 		// Wish Button
 		this.add(wishButton);
-		wishButton.setBounds(357, 10, 118, 38);
+		wishButton.setBounds(337, 10, 138, 38);
 
 		JButton rightNextButton = new JButton("LOVE");
 		rightNextButton.addActionListener(new ActionListener() {
@@ -198,8 +198,8 @@ public class PetPage extends JComponent {
 		win.dispose();
 		JFrame sampleFrame = new JFrame();
 		sampleFrame.setSize(600, 1000);
-		sampleFrame.setLayout(null);
-		sampleFrame.add(new MatchPage(con, curID));
+		sampleFrame.getContentPane().setLayout(null);
+		sampleFrame.getContentPane().add(new MatchPage(con, curID));
 		sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		sampleFrame.setVisible(true);
 	}
