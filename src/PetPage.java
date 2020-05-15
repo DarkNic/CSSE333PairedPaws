@@ -47,24 +47,26 @@ public class PetPage extends JComponent {
 	int i;
 	String s;
 	private Integer curID;
+	private String query;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>" + "Name: R1 <br/>"
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public PetPage(Connection scarlett) {
-		init(scarlett);
-		getAnimals();
+	public PetPage(Connection scarlett, String query) {
+		init(scarlett, query);
+		getAnimals(query);
 		this.max = ids.size();
 		loadNext();
 	}
 
-	private void init(Connection scarlett) {
+	private void init(Connection scarlett, String query) {
 		this.setName("Find Your Furry Friend");
 		this.setSize(496, 794);
 		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();
 		this.ids = new ArrayList<Integer>();
 		this.counter = 0;
+		this.query = query;
 	}
 
 	private void loadNext() {
@@ -202,18 +204,30 @@ public class PetPage extends JComponent {
 		sampleFrame.setVisible(true);
 	}
 
-	private void getAnimals() {
+	private void getAnimals(String query) {
 		Connection scarlett = con;
 		try {
-			CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
+			CallableStatement state = scarlett.prepareCall(query);
 			ResultSet rs = state.executeQuery();
 			while (rs.next()) {
 				ids.add(rs.getInt("AnimalID"));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Loaded query");
+		} catch (Exception e) {
+			System.out.println("Did not load query");
+
+			try {
+				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
+				ResultSet rs = state.executeQuery();
+				while (rs.next()) {
+					ids.add(rs.getInt("AnimalID"));
+				}
+				System.out.println("Loaded alternate");
+			} catch (SQLException r) {
+				r.printStackTrace();
+			}
+			System.out.println(ids);
 		}
-		System.out.println(ids);
 	}
 
 	public static class ImagePanel extends JPanel {

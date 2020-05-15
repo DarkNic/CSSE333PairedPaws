@@ -40,53 +40,61 @@ public class Preferences extends JComponent {
 	private boolean fixedbool;
 	private boolean femalebool;
 	private boolean breedbool;
+	private Connection scarlett;
 
 	public Preferences() {
+		scarlett = Main.con.getConnection();
 		setBackground(Color.RED);
 		this.setSize(400, 400);
 		loadButtons();
 
 		submit.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				getBools();
 
-				Connection scarlett = Main.con.getConnection();
-				try {
-					Statement state = scarlett.createStatement();
-					ResultSet rs = state.executeQuery("Select AnimalID From Dog");
-					while (rs.next()) {
-					}
-
-				} catch (SQLException f) {
-					f.printStackTrace();
-				}
-
-				JMenuBar menu = new JMenuBar();
-				JMenu HomePage = new JMenu("Home");
-				JMenu wishList = new JMenu("Wish List");
-				JMenu account = new JMenu("Account");
-				JMenuItem personalProfile = new JMenuItem("My Profile");
-				JMenuItem settings = new JMenuItem("Settings");
-				JMenuItem logOut = new JMenuItem("Log Out");
-				account.add(personalProfile);
-				account.add(settings);
-				account.add(logOut);
-				menu.add(HomePage);
-				menu.add(wishList);
-				menu.add(account);
-				JFrame sampleFrame = new JFrame();
-				sampleFrame.setSize(600, 1000);
-				sampleFrame.setLayout(null);
-				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new PetPage(scarlett));
-				sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				sampleFrame.setVisible(true);
-
+				String query = "exec Get_anIDs_with_prefs, " + boolToString(oldbool) + ", " + boolToString(dogbool)
+						+ ", " + boolToString(catbool) + ", " + boolToString(malebool) + ", " + boolToString(femalebool)
+						+ ", " + boolToString(fixedbool) + ", " + boolToString(breedbool);
+				newWindow(query);
+				System.out.println(query);
 			}
 
 		});
 
+	}
+
+	private String boolToString(boolean booly) {
+		if (booly) {
+			return "1";
+		} else {
+			return "0";
+		}
+	}
+
+	private void newWindow(String query) {
+
+		JMenuBar menu = new JMenuBar();
+		JMenu HomePage = new JMenu("Home");
+		JMenu wishList = new JMenu("Wish List");
+		JMenu account = new JMenu("Account");
+		JMenuItem personalProfile = new JMenuItem("My Profile");
+		JMenuItem settings = new JMenuItem("Settings");
+		JMenuItem logOut = new JMenuItem("Log Out");
+		account.add(personalProfile);
+		account.add(settings);
+		account.add(logOut);
+		menu.add(HomePage);
+		menu.add(wishList);
+		menu.add(account);
+		JFrame sampleFrame = new JFrame();
+		sampleFrame.setSize(600, 1000);
+		sampleFrame.setLayout(null);
+		sampleFrame.setJMenuBar(menu);
+		sampleFrame.add(new PetPage(scarlett, query));
+		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sampleFrame.setVisible(true);
 	}
 
 	private void getBools() {
