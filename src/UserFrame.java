@@ -58,9 +58,9 @@ public class UserFrame extends JFrame {
 		JPanel panel = new JPanel();
 		// Add all the necessary info about the person into a appropriate view
 		ContactInformation info = this.user.getContact();
-		String generalInfo = "<html> Name: " + this.userName + " <br/>" + "Phone Number: " + info.getPhone() + " <br/>"
-				+ " Email Address: " + info.getEmail() + " <br/>" + "Address: " + info.getAddress() + " <br/>"
-				+ "Zip code: " + info.getZip() + "</html>";
+		String generalInfo = "<html> Name: " + this.user.getName() + " <br/>" + "Phone Number: " + info.getPhone()
+				+ " <br/>" + " Email Address: " + info.getEmail() + " <br/>" + "Address: " + info.getAddress()
+				+ " <br/>" + "Zip code: " + info.getZip() + "</html>";
 		JLabel infoLabel = new JLabel(generalInfo);
 		panel.add(userLabel);
 		panel.add(infoLabel);
@@ -80,7 +80,7 @@ public class UserFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame delFrame = new JFrame();
-				delFrame.setSize(300, 200);
+				delFrame.setSize(300, 100);
 				JPanel panel2 = new JPanel();
 				JLabel use = new JLabel("Are you sure you want to delete your account?");
 				JButton deleteButton = new JButton("Delete");
@@ -119,16 +119,16 @@ public class UserFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editFrame = new JFrame();
-				editFrame.setSize(200, 400);
+				editFrame.setSize(700, 100);
 				JPanel panel3 = new JPanel();
 				JLabel phone = new JLabel("Phone");
-				JTextField textbox2 = new JTextField("i.e. 239-129-2849");
+				JTextField textbox2 = new JTextField("i.e. 239-129-2849", 15);
 				JLabel em = new JLabel("Email");
-				JTextField textbox3 = new JTextField("i.e. sample@gmail.com");
+				JTextField textbox3 = new JTextField("i.e. sample@gmail.com", 15);
 				JLabel addr = new JLabel("Address");
-				JTextField textbox4 = new JTextField("i.e. 51st terre haute, IN");
+				JTextField textbox4 = new JTextField("i.e. 51st terre haute, IN", 15);
 				JLabel zip = new JLabel("Zipcode");
-				JTextField textbox5 = new JTextField("i.e. 47803");
+				JTextField textbox5 = new JTextField("i.e. 47803", 10);
 				JButton editButton = new JButton("Edit");
 				panel3.add(phone);
 				panel3.add(textbox2);
