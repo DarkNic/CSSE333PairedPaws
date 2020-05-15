@@ -120,6 +120,7 @@ public class UserFrame extends JFrame {
 		panel.add(userLabel);
 
 		panel.add(infoLabel);
+		
 
 
 		this.add(panel);
