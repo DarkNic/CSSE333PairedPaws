@@ -34,45 +34,34 @@ import javax.swing.border.Border;
 
 import DB_connect.ConnectionTHHS;
 
-public class PetPage extends JComponent {
+public class MatchPage extends JComponent {
 	/**
 	 * @wbp.nonvisual location=73,274
 	 */
 	ConnectionTHHS con;
-	ArrayList<Dog> dogs;
-	private ArrayList<Integer> ids;
-	int counter;
-	int max;
 	// had to put these here since actionlisteners can't reference local vars
 	int i;
 	String s;
-	private Integer curID;
+	int curID;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>" + "Name: R1 <br/>"
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public PetPage(ConnectionTHHS con) {
+	public MatchPage(ConnectionTHHS con, int animalID) {
+		this.curID = animalID;
+		System.out.println("Curry: " + curID);
 		init(con);
-		getAnimals();
-		this.max = ids.size();
 		loadNext();
 	}
 
 	private void init(ConnectionTHHS con) {
-		this.setName("Find Your Furry Friend");
+		this.setName("Matched!");
 		this.setSize(496, 794);
 		this.con = con;
-		this.dogs = new ArrayList<Dog>();
-		this.ids = new ArrayList<Integer>();
-		this.counter = 0;
 	}
 
 	private void loadNext() {
 
-		if (counter >= max) {
-			counter = 0;
-		}
-		curID = ids.get(counter);
 		Connection scarlett = con.getConnection();
 		String name = null;
 		int house = 0;
@@ -83,6 +72,7 @@ public class PetPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
+			System.out.println("CurHere: " + curID);
 			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
 			state.setInt(1, curID);
 			ResultSet rs = state.executeQuery();
@@ -99,18 +89,16 @@ public class PetPage extends JComponent {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
-			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age,
-					size);
+			makeGUI(name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
-			String age, String size) throws IOException {
+	private void makeGUI(String name, int house, String fixed, String stage, String intake, String gender, String age,
+			String size) throws IOException {
 
 		i = curID;
 		s = name;
@@ -141,7 +129,7 @@ public class PetPage extends JComponent {
 		this.add(wishButton);
 		wishButton.setBounds(357, 10, 118, 38);
 
-		JButton rightNextButton = new JButton("L💖VE");
+		JButton rightNextButton = new JButton("💖💖💖");
 		rightNextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -149,25 +137,21 @@ public class PetPage extends JComponent {
 		rightNextButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				match();
+				match(curID);
 			}
 		});
 
 		this.add(rightNextButton);
 		rightNextButton.setBounds(337, 494, 138, 45);
 
-		JButton leftBackButton = new JButton("Not Mine");
+		JButton leftBackButton = new JButton("Not 💖");
 		this.add(leftBackButton);
 		leftBackButton.setBounds(23, 494, 121, 45);
 
 		leftBackButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				counter++;
-				if (counter >= max) {
-					counter = 1;
-				}
-				loadNext();
+
 			}
 		});
 
@@ -191,29 +175,15 @@ public class PetPage extends JComponent {
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
-	private void match() {
+	private void match(int animalID) {
 		Window win = SwingUtilities.getWindowAncestor(this);
 		win.dispose();
 		JFrame sampleFrame = new JFrame();
 		sampleFrame.setSize(600, 1000);
 		sampleFrame.setLayout(null);
-		sampleFrame.add(new MatchPage(con, curID));
+//		sampleFrame.add(new MatchPage(con, animalID));
 		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		sampleFrame.setVisible(true);
-	}
-
-	private void getAnimals() {
-		Connection scarlett = con.getConnection();
-		try {
-			CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
-			ResultSet rs = state.executeQuery();
-			while (rs.next()) {
-				ids.add(rs.getInt("AnimalID"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(ids);
 	}
 
 	public static class ImagePanel extends JPanel {
