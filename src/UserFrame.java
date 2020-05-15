@@ -149,16 +149,20 @@ editContactInfoButton.setBounds(600, 500, 50, 50);
 			public void actionPerformed(ActionEvent e) {
 
 				JFrame delFrame = new JFrame();
-				delFrame.setSize(200, 200);
+				delFrame.setSize(300, 200);
 				JPanel panel2=new JPanel();
 
 				JLabel use = new JLabel("Are you sure you want to delete your account?");
 
 				JButton deleteButton = new JButton("Delete");
+				JButton cancelButton = new JButton("Cancel");
 
 				panel2.add(use);
 
 				panel2.add(deleteButton);
+				panel2.add(cancelButton);
+				
+				
 				
 				delFrame.add(panel2);
 
@@ -166,6 +170,16 @@ editContactInfoButton.setBounds(600, 500, 50, 50);
 
 				delFrame.setVisible(true);
 
+				cancelButton.addActionListener(new ActionListener() {
+
+					@Override
+
+					public void actionPerformed(ActionEvent e) {
+						delFrame.dispose();
+					}
+
+				});
+				
 				deleteButton.addActionListener(new ActionListener() {
 
 					@Override
