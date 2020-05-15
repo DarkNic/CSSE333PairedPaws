@@ -141,7 +141,7 @@ public class PetPage extends JComponent {
 		this.add(wishButton);
 		wishButton.setBounds(357, 10, 118, 38);
 
-		JButton rightNextButton = new JButton("L💖VE");
+		JButton rightNextButton = new JButton("L♥️VE");
 		rightNextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
