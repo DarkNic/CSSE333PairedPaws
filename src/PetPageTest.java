@@ -83,7 +83,7 @@ public class PetPageTest {
 		sampleFrame.setSize(600, 1000);
 		sampleFrame.setLayout(null);
 		sampleFrame.setJMenuBar(menu);
-		sampleFrame.add(new PetPage(scarlett));
+//		sampleFrame.add(new PetPage(scarlett));
 		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		sampleFrame.setVisible(true);
 
