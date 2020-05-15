@@ -104,56 +104,7 @@ public class MatchPage extends JComponent {
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
-		doggy2.setBounds(25, 50, 450, 421);
-
-		JButton wishButton = new JButton("Add to Wish List");
-		wishButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				boolean logged = false;
-				if (!Main.loggedUser.equals("")) {
-					logged = true;
-				} else {
-					JOptionPane.showMessageDialog(null, "Please log in to add pets to your wishlist.");
-				}
-
-				if (logged && WishListOperations.add(Main.loggedUser, i)) {
-					JOptionPane.showMessageDialog(null, "Successfully added " + s + " to your wishlist!");
-				}
-			}
-
-		});
-		// Wish Button
-		this.add(wishButton);
-		wishButton.setBounds(357, 10, 118, 38);
-
-		JButton rightNextButton = new JButton("💖💖💖");
-		rightNextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		rightNextButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				match(curID);
-			}
-		});
-
-		this.add(rightNextButton);
-		rightNextButton.setBounds(337, 494, 138, 45);
-
-		JButton leftBackButton = new JButton("Not 💖");
-		this.add(leftBackButton);
-		leftBackButton.setBounds(23, 494, 121, 45);
-
-		leftBackButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
+		doggy2.setBounds(25, 30, 450, 421);
 
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
@@ -169,21 +120,34 @@ public class MatchPage extends JComponent {
 
 		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
-		bioOfAnimal.setBounds(154, 494, 173, 300);
+		bioOfAnimal.setBounds(301, 471, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
 
-		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	}
+		JLabel congrats = new JLabel("CONGRATS!!!");
+		congrats.setFont(new Font("Segoe UI", Font.BOLD, 35));
+		congrats.setBounds(25, 471, 248, 42);
+		add(congrats);
 
-	private void match(int animalID) {
-		Window win = SwingUtilities.getWindowAncestor(this);
-		win.dispose();
-		JFrame sampleFrame = new JFrame();
-		sampleFrame.setSize(600, 1000);
-		sampleFrame.setLayout(null);
-//		sampleFrame.add(new MatchPage(con, animalID));
-		sampleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		sampleFrame.setVisible(true);
+		JLabel match = new JLabel("You matched with: ");
+		match.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		match.setBounds(25, 511, 211, 42);
+		add(match);
+
+		JButton adoptNow = new JButton("Adopt me Now!");
+		adoptNow.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		adoptNow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		adoptNow.setBounds(25, 613, 211, 53);
+		add(adoptNow);
+
+		JLabel petName = new JLabel(name);
+		petName.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		petName.setBounds(25, 547, 211, 42);
+		add(petName);
+
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
 	public static class ImagePanel extends JPanel {
@@ -237,5 +201,4 @@ public class MatchPage extends JComponent {
 		menu.add(wishList);
 		menu.add(account);
 	}
-
 }

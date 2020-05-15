@@ -54,11 +54,11 @@ public class Preferences extends JComponent {
 			public void mouseClicked(MouseEvent e) {
 				getBools();
 
-				String query = "exec Get_anIDs_with_prefs, " + boolToString(oldbool) + ", " + boolToString(dogbool)
+				String query = "exec Get_anIDs_with_prefs " + boolToString(oldbool) + ", " + boolToString(dogbool)
 						+ ", " + boolToString(catbool) + ", " + boolToString(malebool) + ", " + boolToString(femalebool)
 						+ ", " + boolToString(fixedbool) + ", " + boolToString(breedbool);
-				newWindow(query);
 				System.out.println(query);
+				newWindow(query);
 			}
 
 		});

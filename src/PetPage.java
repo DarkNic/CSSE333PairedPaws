@@ -212,6 +212,10 @@ public class PetPage extends JComponent {
 			while (rs.next()) {
 				ids.add(rs.getInt("AnimalID"));
 			}
+			if (ids.size() == 0) {
+				
+				throw new Exception();
+			}
 			System.out.println("Loaded query");
 		} catch (Exception e) {
 			System.out.println("Did not load query");
