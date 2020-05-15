@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import DB_connect.ConnectionTHHS;
@@ -59,7 +61,7 @@ public class UserFrame extends JFrame {
 	private void init(ConnectionTHHS con) {
 
 		this.setName("User Profile");
-
+		this.setSize(1000, 250);
 		this.con = con;
 
 	}
@@ -96,6 +98,8 @@ public class UserFrame extends JFrame {
 	private void createFrame() {
 
 		JLabel userLabel = new JLabel(this.userName);
+		
+		JPanel panel=new JPanel();
 
 //Add all the necessary info about the person into a appropriate view
 
@@ -113,64 +117,49 @@ public class UserFrame extends JFrame {
 
 		JLabel infoLabel = new JLabel(generalInfo);
 
-		JButton queryButton = new JButton("Start a new search");
+		panel.add(userLabel);
 
-		queryButton.addActionListener(new ActionListener() {
+		panel.add(infoLabel);
 
-			@Override
 
-			public void actionPerformed(ActionEvent e) {
-
-// TODO Auto-generated method stub
-
-				SearchFrame newsearch = new SearchFrame();
-
-				newsearch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-				newsearch.setVisible(true);
-			}
-
-		});
-
-		getContentPane().add(userLabel);
-
-		getContentPane().add(infoLabel);
-
-		getContentPane().add(queryButton);
-
-		adminButtons();
+		this.add(panel);
+		adminButtons(panel);
+		
+		
 
 	}
 
-	private void adminButtons() {
+	private void adminButtons(JPanel pan) {
 
 		JButton deleteAccountButton = new JButton("Delete Account");
-
+deleteAccountButton.setBounds(500, 500, 50, 50);
 		JButton editContactInfoButton = new JButton("Edit Contact Information");
+editContactInfoButton.setBounds(600, 500, 50, 50);
+		JButton prefButton = new JButton("Start a New Search");
+		prefButton.setBounds(800, 500, 50, 50);
 
-		JButton prefButton = new JButton("Preferences");
 
 		Connection connection = con.getConnection();
-
+		
 		deleteAccountButton.addActionListener(new ActionListener() {
-
+		
 			@Override
 
 			public void actionPerformed(ActionEvent e) {
 
 				JFrame delFrame = new JFrame();
+				delFrame.setSize(200, 200);
+				JPanel panel2=new JPanel();
 
-				JLabel use = new JLabel("UserName");
-
-				JTextField textbox = new JTextField("i.e. Mason");
+				JLabel use = new JLabel("Are you sure you want to delete your account?");
 
 				JButton deleteButton = new JButton("Delete");
 
-				delFrame.getContentPane().add(use);
+				panel2.add(use);
 
-				delFrame.getContentPane().add(textbox);
-
-				delFrame.getContentPane().add(deleteButton);
+				panel2.add(deleteButton);
+				
+				delFrame.add(panel2);
 
 				delFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -182,24 +171,24 @@ public class UserFrame extends JFrame {
 
 					public void actionPerformed(ActionEvent e) {
 
-						String text = textbox.getText();
 
 						try {
 
 							CallableStatement state = connection.prepareCall("{call remove_Person(?)}");
 
-							state.setString(1, text);
+							state.setString(1, Main.loggedUser);
 
-							state.executeQuery();
+							state.execute();
 
+							Main.loggedUser="";
+							state.close();
 						} catch (Exception e2) {
 
 							e2.printStackTrace();
 
 						}
-
 						delFrame.setVisible(false);
-
+						UserFrame.this.dispose();
 					}
 
 				});
@@ -215,10 +204,9 @@ public class UserFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				JFrame editFrame = new JFrame();
-
-				JLabel use = new JLabel("UserName");
-
-				JTextField textbox = new JTextField("i.e. Mason");
+				editFrame.setSize(200, 400);
+				
+				JPanel panel3=new JPanel();
 
 				JLabel phone = new JLabel("Phone");
 
@@ -238,27 +226,25 @@ public class UserFrame extends JFrame {
 
 				JButton editButton = new JButton("Edit");
 
-				editFrame.getContentPane().add(use);
+				panel3.add(phone);
 
-				editFrame.getContentPane().add(textbox);
+				panel3.add(textbox2);
 
-				editFrame.getContentPane().add(phone);
+				panel3.add(em);
 
-				editFrame.getContentPane().add(textbox2);
+				panel3.add(textbox3);
 
-				editFrame.getContentPane().add(em);
+				panel3.add(addr);
 
-				editFrame.getContentPane().add(textbox3);
+				panel3.add(textbox4);
 
-				editFrame.getContentPane().add(addr);
+				panel3.add(zip);
 
-				editFrame.getContentPane().add(textbox4);
+				panel3.add(textbox5);
 
-				editFrame.getContentPane().add(zip);
-
-				editFrame.getContentPane().add(textbox5);
-
-				editFrame.getContentPane().add(editButton);
+				panel3.add(editButton);
+				
+				editFrame.add(panel3);
 
 				editFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -270,8 +256,6 @@ public class UserFrame extends JFrame {
 
 					public void actionPerformed(ActionEvent e) {
 
-						String text = textbox.getText();
-
 						String text2 = textbox2.getText();
 
 						String text3 = textbox3.getText();
@@ -282,10 +266,10 @@ public class UserFrame extends JFrame {
 
 						try {
 
-							CallableStatement state = connection.prepareCall("{call edit_Contact(?, ?, ?, ?, ?)}");
+							CallableStatement state = connection.prepareCall("{call edit_Contact( ?,?, ?, ?, ?)}");
 
-							state.setString(1, text);
-
+							state.setString(1, Main.loggedUser);
+							
 							state.setString(2, text2);
 
 							state.setString(3, text3);
@@ -294,8 +278,9 @@ public class UserFrame extends JFrame {
 
 							state.setString(5, text5);
 
-							state.executeQuery();
+							state.execute();
 
+							state.close();
 						} catch (Exception e2) {
 
 							e2.printStackTrace();
@@ -336,12 +321,16 @@ public class UserFrame extends JFrame {
 
 		});
 
-		getContentPane().add(deleteAccountButton);
+		deleteAccountButton.setBounds(600, 500, 50, 50);
+		editContactInfoButton.setBounds(700,500,50,50);
+		prefButton.setBounds(800, 500, 50, 50);
+		
+		pan.add(deleteAccountButton);
 
-		getContentPane().add(editContactInfoButton);
+		pan.add(editContactInfoButton);
 
-		getContentPane().add(prefButton);
-
+		pan.add(prefButton);
+		this.add(pan);
 	}
 
 }
