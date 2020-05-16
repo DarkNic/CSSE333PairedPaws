@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class ConnectionTHHS {
 	private Connection connection = null;
-
 	private String databaseName;
 	private String serverName;
 
@@ -14,28 +13,28 @@ public class ConnectionTHHS {
 		this.serverName = serverName;
 		this.databaseName = databaseName;
 	}
-	
+
 	public boolean connect(String user, String pass) {
-		String connectionString = "jdbc:sqlserver://"+this.serverName+";databaseName="+this.databaseName+";user="+user+";password="+pass;
+		String connectionString = "jdbc:sqlserver://" + this.serverName + ";databaseName=" + this.databaseName
+				+ ";user=" + user + ";password=" + pass;
 		try {
 			connection = DriverManager.getConnection(connectionString);
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return false;
 	}
-	
 
 	public Connection getConnection() {
 		return this.connection;
 	}
-	
+
 	public void closeConnection() {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 }

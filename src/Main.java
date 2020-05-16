@@ -128,7 +128,7 @@ public class Main {
 			}
 			getDogs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return arrayList;
 	}

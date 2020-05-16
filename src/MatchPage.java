@@ -3,11 +3,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +12,17 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-
-import DB_connect.ConnectionTHHS;
 
 public class MatchPage extends JComponent {
 	/**
@@ -61,7 +51,6 @@ public class MatchPage extends JComponent {
 	}
 
 	private void loadNext() {
-
 		Connection scarlett = con;
 		String name = null;
 		int house = 0;
@@ -87,25 +76,23 @@ public class MatchPage extends JComponent {
 				size = rs.getString("size");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
 	private void makeGUI(String name, int house, String fixed, String stage, String intake, String gender, String age,
 			String size) throws IOException {
-
 		i = curID;
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
 		doggy2.setBounds(25, 30, 450, 421);
-
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
@@ -114,25 +101,20 @@ public class MatchPage extends JComponent {
 		String glock = blackWidow.replaceFirst("R6", intake);
 		String cap = glock.replaceFirst("R7", size);
 		String hope = cap.replaceFirst("R9", age);
-
 		JLabel bioOfAnimal = new JLabel(hope);
 		bioOfAnimal.setOpaque(true);
-
 		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(301, 471, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
 		JLabel congrats = new JLabel("CONGRATS!!!");
 		congrats.setFont(new Font("Segoe UI", Font.BOLD, 35));
 		congrats.setBounds(25, 471, 248, 42);
 		add(congrats);
-
 		JLabel match = new JLabel("You matched with: ");
 		match.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		match.setBounds(25, 511, 211, 42);
 		add(match);
-
 		JButton adoptNow = new JButton("Adopt me Now!");
 		adoptNow.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		adoptNow.addActionListener(new ActionListener() {
@@ -141,27 +123,22 @@ public class MatchPage extends JComponent {
 		});
 		adoptNow.setBounds(25, 613, 211, 53);
 		add(adoptNow);
-
 		JLabel petName = new JLabel(name);
 		petName.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		petName.setBounds(25, 547, 211, 42);
 		add(petName);
-
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
 	public static class ImagePanel extends JPanel {
-
 		private BufferedImage image;
 
-//might add a second constructor that resizes as well as draws. FYI, this takes too long
+		// might add a second constructor that resizes as well as draws. FYI, this takes
+		// too long
 		public ImagePanel(int animalID) {
-
 			String filepath = ("images/" + animalID + ".png");
-
 			try {
 				image = ImageIO.read(new File(filepath));
-
 			} catch (IOException ex) {
 				// handle exception...
 			}
@@ -170,11 +147,9 @@ public class MatchPage extends JComponent {
 		public static BufferedImage resize(BufferedImage img, int newW, int newH) {
 			Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
 			BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
 			Graphics2D g2d = dimg.createGraphics();
 			g2d.drawImage(tmp, 0, 0, null);
 			g2d.dispose();
-
 			return dimg;
 		}
 
@@ -183,7 +158,6 @@ public class MatchPage extends JComponent {
 			super.paintComponent(g);
 			g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters
 		}
-
 	}
 
 	private void setWindowBar() {

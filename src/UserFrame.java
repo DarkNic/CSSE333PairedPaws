@@ -49,7 +49,7 @@ public class UserFrame extends JFrame {
 						rs.getString("zipcode"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
@@ -107,7 +107,7 @@ public class UserFrame extends JFrame {
 							Main.loggedUser = "";
 							state.close();
 						} catch (Exception e2) {
-							e2.printStackTrace();
+							// e2.printStackTrace();
 						}
 						delFrame.setVisible(false);
 						UserFrame.this.dispose();
@@ -159,7 +159,7 @@ public class UserFrame extends JFrame {
 							state.execute();
 							state.close();
 						} catch (Exception e2) {
-							e2.printStackTrace();
+							// e2.printStackTrace();
 						}
 						editFrame.setVisible(false);
 					}

@@ -15,7 +15,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -31,8 +30,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-
-import DB_connect.ConnectionTHHS;
 
 public class PetPage extends JComponent {
 	/**
@@ -70,7 +67,6 @@ public class PetPage extends JComponent {
 	}
 
 	private void loadNext() {
-
 		if (counter >= max) {
 			counter = 0;
 		}
@@ -99,7 +95,7 @@ public class PetPage extends JComponent {
 				size = rs.getString("size");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
@@ -107,42 +103,35 @@ public class PetPage extends JComponent {
 			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
 					size);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
-
 		i = curID;
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
 		doggy2.setBounds(25, 50, 450, 421);
-
 		JButton wishButton = new JButton("Add to Wish List");
 		wishButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
 				boolean logged = false;
 				if (!Main.loggedUser.equals("")) {
 					logged = true;
 				} else {
 					JOptionPane.showMessageDialog(null, "Please log in to add pets to your wishlist.");
 				}
-
 				if (logged && WishListOperations.add(Main.loggedUser, i)) {
 					JOptionPane.showMessageDialog(null, "Successfully added " + s + " to your wishlist!");
 				}
 			}
-
 		});
 		// Wish Button
 		this.add(wishButton);
 		wishButton.setBounds(337, 10, 138, 38);
-
 		JButton rightNextButton = new JButton("LOVE");
 		rightNextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -154,14 +143,11 @@ public class PetPage extends JComponent {
 				match();
 			}
 		});
-
 		this.add(rightNextButton);
 		rightNextButton.setBounds(337, 494, 138, 45);
-
 		JButton leftBackButton = new JButton("Not Mine");
 		this.add(leftBackButton);
 		leftBackButton.setBounds(23, 494, 121, 45);
-
 		leftBackButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -172,7 +158,6 @@ public class PetPage extends JComponent {
 				loadNext();
 			}
 		});
-
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
@@ -181,15 +166,12 @@ public class PetPage extends JComponent {
 		String glock = blackWidow.replaceFirst("R6", intake);
 		String cap = glock.replaceFirst("R7", size);
 		String hope = cap.replaceFirst("R9", age);
-
 		JLabel bioOfAnimal = new JLabel(hope);
 		bioOfAnimal.setOpaque(true);
-
 		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(154, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
@@ -213,13 +195,11 @@ public class PetPage extends JComponent {
 				ids.add(rs.getInt("AnimalID"));
 			}
 			if (ids.size() == 0) {
-				
 				throw new Exception();
 			}
 			System.out.println("Loaded query");
 		} catch (Exception e) {
 			System.out.println("Did not load query");
-
 			try {
 				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
 				ResultSet rs = state.executeQuery();
@@ -228,24 +208,21 @@ public class PetPage extends JComponent {
 				}
 				System.out.println("Loaded alternate");
 			} catch (SQLException r) {
-				r.printStackTrace();
+				// r.printStackTrace();
 			}
 			System.out.println(ids);
 		}
 	}
 
 	public static class ImagePanel extends JPanel {
-
 		private BufferedImage image;
 
-//might add a second constructor that resizes as well as draws. FYI, this takes too long
+		// might add a second constructor that resizes as well as draws. FYI, this takes
+		// too long
 		public ImagePanel(int animalID) {
-
 			String filepath = ("images/" + animalID + ".png");
-
 			try {
 				image = ImageIO.read(new File(filepath));
-
 			} catch (IOException ex) {
 				// handle exception...
 			}
@@ -254,11 +231,9 @@ public class PetPage extends JComponent {
 		public static BufferedImage resize(BufferedImage img, int newW, int newH) {
 			Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
 			BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
 			Graphics2D g2d = dimg.createGraphics();
 			g2d.drawImage(tmp, 0, 0, null);
 			g2d.dispose();
-
 			return dimg;
 		}
 
@@ -267,7 +242,6 @@ public class PetPage extends JComponent {
 			super.paintComponent(g);
 			g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters
 		}
-
 	}
 
 	private void setWindowBar() {
@@ -285,5 +259,4 @@ public class PetPage extends JComponent {
 		menu.add(wishList);
 		menu.add(account);
 	}
-
 }
