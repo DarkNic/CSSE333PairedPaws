@@ -7,11 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -34,8 +37,21 @@ public class Main {
 
 	// this works, waiting to get guest user
 	public static void init() {
-		con = new ConnectionTHHS("golem.csse.rose-hulman.edu", "THHS_AS");
-		System.out.println(con.connect("THHS30", "Password123") ? "Connected!" : "Failed to Connect.");
+		String uname = "", pass = "", name = "", server = "";
+		try (InputStream input = new FileInputStream("config.properties")) {
+			Properties prop = new Properties();
+			// load a properties file
+			prop.load(input);
+			// get the property value and print it out
+			name = prop.getProperty("db.name");
+			uname = prop.getProperty("db.user");
+			pass = prop.getProperty("db.pass");
+			server = prop.getProperty("db.server");
+		} catch (IOException ex) {
+			// ex.printStackTrace();
+		}
+		con = new ConnectionTHHS(server, name);
+		System.out.println(con.connect(uname, pass) ? "Connected!" : "Failed to Connect.");
 	}
 
 	/**
