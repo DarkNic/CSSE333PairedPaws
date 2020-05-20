@@ -75,6 +75,8 @@ public class UserFrame extends JFrame {
 		editContactInfoButton.setBounds(600, 500, 50, 50);
 		JButton prefButton = new JButton("Start a New Search");
 		prefButton.setBounds(800, 500, 50, 50);
+		JButton viewWishListButton = new JButton("View Wish List");
+		viewWishListButton.setBounds(900, 500, 50, 50);
 		Connection connection = con.getConnection();
 		deleteAccountButton.addActionListener(new ActionListener() {
 			@Override
@@ -184,6 +186,7 @@ public class UserFrame extends JFrame {
 		pan.add(deleteAccountButton);
 		pan.add(editContactInfoButton);
 		pan.add(prefButton);
+		pan.add(viewWishListButton);
 		this.add(pan);
 	}
 }
