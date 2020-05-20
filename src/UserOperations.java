@@ -124,6 +124,29 @@ public class UserOperations {
 		return false;
 	}
 
+	public static boolean addAdoption(String uname, int anID, int payID) {
+		int ret = 0;
+		try {
+			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call insert_Adoption(?,?,?)");
+			cs.registerOutParameter(1, Types.INTEGER);
+			cs.setString(2, uname);
+			cs.setInt(3, anID);
+			cs.setInt(4, payID);
+			cs.execute();
+			ret = cs.getInt(1);
+			if (ret != 0)
+				throw new SQLException();
+			cs.close();
+			return true;
+		} catch (SQLException e) {
+			String error = "An error occurred.";
+			if (ret == 1)
+				error = "Must be logged in to add a payment method";
+			JOptionPane.showMessageDialog(null, error);
+		}
+		return false;
+	}
+
 	public static String hashCredit(String uname, String info) {
 		uname = uname.toLowerCase();
 		KeySpec spec = new PBEKeySpec(info.toCharArray(), dec.decode(uname), 65536, 128);
