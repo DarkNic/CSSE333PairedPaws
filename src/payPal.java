@@ -104,6 +104,10 @@ public class payPal extends JComponent {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Thread.sleep(8999);
+				} catch (InterruptedException e1) {
+				}
 				JOptionPane.showMessageDialog(getParent(), "Success, pick up your pet within 3 days.");
 			}
 		});
