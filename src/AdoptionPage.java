@@ -3,11 +3,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +12,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -26,54 +22,36 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-public class PetPage extends JComponent {
+public class AdoptionPage extends JComponent {
 	/**
 	 * @wbp.nonvisual location=73,274
 	 */
 	Connection con;
-	ArrayList<Dog> dogs;
-	private ArrayList<Integer> ids;
-	int counter;
-	int max;
 	// had to put these here since actionlisteners can't reference local vars
 	int i;
 	String s;
-	private Integer curID;
-	private String query;
-	private Connection scarlett;
+	int curID;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>" + "Name: R1 <br/>"
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public PetPage(Connection scarlett, String query) {
-		init(scarlett, query);
-		getAnimals(query);
-		this.max = ids.size();
+	public AdoptionPage(Connection con2, int animalID) {
+		this.curID = animalID;
+		System.out.println("Curry: " + curID);
+		init(con2);
 		loadNext();
 	}
 
-	private void init(Connection scarlett, String query) {
-		this.scarlett = scarlett;
-		this.setName("Find Your Furry Friend");
-		https: // docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
+	private void init(Connection con2) {
+		this.setName("Matched!");
 		this.setSize(496, 794);
-		this.con = scarlett;
-		this.dogs = new ArrayList<Dog>();
-		this.ids = new ArrayList<Integer>();
-		this.counter = 0;
-		this.query = query;
+		this.con = con2;
 	}
 
 	private void loadNext() {
-		if (counter >= max) {
-			counter = 0;
-		}
-		curID = ids.get(counter);
 		Connection scarlett = con;
 		String name = null;
 		int house = 0;
@@ -84,6 +62,7 @@ public class PetPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
+			System.out.println("CurHere: " + curID);
 			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
 			state.setInt(1, curID);
 			ResultSet rs = state.executeQuery();
@@ -100,27 +79,42 @@ public class PetPage extends JComponent {
 		} catch (SQLException e) {
 			// e.printStackTrace();
 		}
-		counter++;
 		System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
-			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
-					size);
+			makeGUI(name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {
 			// e.printStackTrace();
 		}
 	}
 
-	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
-			String age, String size) throws IOException {
+	private void makeGUI(String name, int house, String fixed, String stage, String intake, String gender, String age,
+			String size) throws IOException {
 		i = curID;
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
-		doggy2.setBounds(25, 50, 450, 421);
-		JButton wishView = new JButton("View Wish List");
-		wishView.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		doggy2.setBounds(136, 30, 204, 208);
+		// Making the HTML in this block
+		String toInsert = exampleString.replaceFirst("R1", name);
+		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
+		String johansson = newy.replaceFirst("R3", String.valueOf(fixed));
+		String blackWidow = johansson.replaceFirst("R4", stage);
+		String glock = blackWidow.replaceFirst("R6", intake);
+		String cap = glock.replaceFirst("R7", size);
+		String hope = cap.replaceFirst("R9", age);
+		JLabel congrats = new JLabel("Your furry friend");
+		congrats.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		congrats.setBounds(10, 293, 293, 42);
+		add(congrats);
+		JLabel match = new JLabel("is waiting on you!");
+		match.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		match.setBounds(10, 371, 211, 42);
+		add(match);
+		JButton creditButt = new JButton("Credit Card");
+		creditButt.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		creditButt.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
 				JMenuBar menu = new JMenuBar();
 				JMenu HomePage = new JMenu("Home");
 				JMenu wishList = new JMenu("Wish List");
@@ -136,100 +130,31 @@ public class PetPage extends JComponent {
 				menu.add(account);
 				JFrame sampleFrame = new JFrame();
 				sampleFrame.setSize(600, 1000);
-				sampleFrame.setLayout(null);
+				sampleFrame.getContentPane().setLayout(null);
 				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new WishList(scarlett));
+				sampleFrame.getContentPane().add(new CreditCardPage(con, curID));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
+				
 			}
 		});
-		// Wish Button
-		this.add(wishView);
-		wishView.setBounds(25, 10, 138, 38);
-		JButton rightNextButton = new JButton("LOVE");
-		rightNextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		rightNextButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				match();
-			}
-		});
-		this.add(rightNextButton);
-		rightNextButton.setBounds(337, 494, 138, 45);
-		JButton leftBackButton = new JButton("Not Mine");
-		this.add(leftBackButton);
-		leftBackButton.setBounds(23, 494, 121, 45);
-		leftBackButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				counter++;
-				if (counter >= max) {
-					counter = 1;
-				}
-				loadNext();
-			}
-		});
-		// Making the HTML in this block
-		String toInsert = exampleString.replaceFirst("R1", name);
-		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
-		String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
-		String blackWidow = scarlett.replaceFirst("R4", stage);
-		String glock = blackWidow.replaceFirst("R6", intake);
-		String cap = glock.replaceFirst("R7", size);
-		String hope = cap.replaceFirst("R9", age);
-		JLabel bioOfAnimal = new JLabel(hope);
-		bioOfAnimal.setOpaque(true);
-		bioOfAnimal.setBackground(new Color(150, 150, 150));
-		add(bioOfAnimal);
-		bioOfAnimal.setBounds(154, 494, 173, 300);
-		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
-		JButton wishButton_1 = new JButton("Add to Wish List");
-		wishButton_1.setBounds(337, 10, 138, 38);
-		add(wishButton_1);
+		creditButt.setBounds(37, 621, 184, 53);
+		add(creditButt);
+		JLabel petName = new JLabel(name);
+		petName.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		petName.setBounds(10, 334, 211, 42);
+		add(petName);
+		
+		JLabel checkoutTitle = new JLabel("Check Out Now!");
+		checkoutTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		checkoutTitle.setBounds(159, 569, 211, 42);
+		add(checkoutTitle);
+		
+		JButton PayPal = new JButton("PayPal");
+		PayPal.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		PayPal.setBounds(260, 621, 184, 53);
+		add(PayPal);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	}
-
-	private void match() {
-		Window win = SwingUtilities.getWindowAncestor(this);
-		win.dispose();
-		JFrame sampleFrame = new JFrame();
-		sampleFrame.setSize(600, 1000);
-		sampleFrame.getContentPane().setLayout(null);
-		sampleFrame.getContentPane().add(new MatchPage(con, curID));
-		sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		sampleFrame.setVisible(true);
-	}
-
-	private void getAnimals(String query) {
-		Connection scarlett = con;
-		try {
-			CallableStatement state = scarlett.prepareCall(query);
-			ResultSet rs = state.executeQuery();
-			while (rs.next()) {
-				ids.add(rs.getInt("AnimalID"));
-			}
-			if (ids.size() == 0) {
-				throw new Exception();
-			}
-			System.out.println("Loaded query");
-		} catch (Exception e) {
-			System.out.println("Did not load query");
-			try {
-				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
-				ResultSet rs = state.executeQuery();
-				while (rs.next()) {
-					ids.add(rs.getInt("AnimalID"));
-				}
-				System.out.println("Loaded alternate");
-			} catch (SQLException r) {
-				// r.printStackTrace();
-			}
-			System.out.println(ids);
-		}
 	}
 
 	public static class ImagePanel extends JPanel {

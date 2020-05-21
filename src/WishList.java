@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-public class PetPage extends JComponent {
+public class WishList extends JComponent {
 	/**
 	 * @wbp.nonvisual location=73,274
 	 */
@@ -45,22 +45,27 @@ public class PetPage extends JComponent {
 	String s;
 	private Integer curID;
 	private String query;
-	private Connection scarlett;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>" + "Name: R1 <br/>"
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public PetPage(Connection scarlett, String query) {
+	public WishList(Connection scarlett) {
 		init(scarlett, query);
 		getAnimals(query);
 		this.max = ids.size();
 		loadNext();
 	}
 
+	
+	
+	
+//		public static String loggedUser = "";
+
+	
+	
+	
 	private void init(Connection scarlett, String query) {
-		this.scarlett = scarlett;
 		this.setName("Find Your Furry Friend");
-		https: // docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
 		this.setSize(496, 794);
 		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();
@@ -116,62 +121,7 @@ public class PetPage extends JComponent {
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
-		doggy2.setBounds(25, 50, 450, 421);
-		JButton wishView = new JButton("View Wish List");
-		wishView.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JMenuBar menu = new JMenuBar();
-				JMenu HomePage = new JMenu("Home");
-				JMenu wishList = new JMenu("Wish List");
-				JMenu account = new JMenu("Account");
-				JMenuItem personalProfile = new JMenuItem("My Profile");
-				JMenuItem settings = new JMenuItem("Settings");
-				JMenuItem logOut = new JMenuItem("Log Out");
-				account.add(personalProfile);
-				account.add(settings);
-				account.add(logOut);
-				menu.add(HomePage);
-				menu.add(wishList);
-				menu.add(account);
-				JFrame sampleFrame = new JFrame();
-				sampleFrame.setSize(600, 1000);
-				sampleFrame.setLayout(null);
-				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new WishList(scarlett));
-				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				sampleFrame.setVisible(true);
-			}
-		});
-		// Wish Button
-		this.add(wishView);
-		wishView.setBounds(25, 10, 138, 38);
-		JButton rightNextButton = new JButton("LOVE");
-		rightNextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		rightNextButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				match();
-			}
-		});
-		this.add(rightNextButton);
-		rightNextButton.setBounds(337, 494, 138, 45);
-		JButton leftBackButton = new JButton("Not Mine");
-		this.add(leftBackButton);
-		leftBackButton.setBounds(23, 494, 121, 45);
-		leftBackButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				counter++;
-				if (counter >= max) {
-					counter = 1;
-				}
-				loadNext();
-			}
-		});
+		doggy2.setBounds(21, 45, 144, 156);
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
@@ -184,24 +134,9 @@ public class PetPage extends JComponent {
 		bioOfAnimal.setOpaque(true);
 		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
-		bioOfAnimal.setBounds(154, 494, 173, 300);
+		bioOfAnimal.setBounds(10, 228, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
-		JButton wishButton_1 = new JButton("Add to Wish List");
-		wishButton_1.setBounds(337, 10, 138, 38);
-		add(wishButton_1);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	}
-
-	private void match() {
-		Window win = SwingUtilities.getWindowAncestor(this);
-		win.dispose();
-		JFrame sampleFrame = new JFrame();
-		sampleFrame.setSize(600, 1000);
-		sampleFrame.getContentPane().setLayout(null);
-		sampleFrame.getContentPane().add(new MatchPage(con, curID));
-		sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		sampleFrame.setVisible(true);
 	}
 
 	private void getAnimals(String query) {
