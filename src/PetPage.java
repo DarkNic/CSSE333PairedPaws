@@ -138,7 +138,7 @@ public class PetPage extends JComponent {
 				sampleFrame.setSize(600, 1000);
 				sampleFrame.setLayout(null);
 				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new WishList(scarlett));
+				sampleFrame.add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
 			}

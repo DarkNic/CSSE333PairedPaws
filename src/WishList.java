@@ -45,27 +45,22 @@ public class WishList extends JComponent {
 	String s;
 	private Integer curID;
 	private String query;
+	private Connection scarlett;
 	public static final String exampleString = "<html><div style='text-align: center;'>" + "<html>" + "Name: R1 <br/>"
 			+ "Gender: R2 <br/>" + "Fixed: R3 <br/>" + "Stage: R4 <br/>" + "Intake Date: R6 <br/>" + "Size: R7 <br/>"
 			+ "Age: R9 <br/>" + "</div></html>";
 
-	public WishList(Connection scarlett) {
+	public WishList(Connection scarlett, String query) {
 		init(scarlett, query);
 		getAnimals(query);
 		this.max = ids.size();
 		loadNext();
 	}
 
-	
-	
-	
-//		public static String loggedUser = "";
-
-	
-	
-	
 	private void init(Connection scarlett, String query) {
+		this.scarlett = scarlett;
 		this.setName("Find Your Furry Friend");
+		https: // docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
 		this.setSize(496, 794);
 		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();
@@ -106,7 +101,7 @@ public class WishList extends JComponent {
 			// e.printStackTrace();
 		}
 		counter++;
-		System.out.println(name + house + fixed + stage + intake + gender + age);
+		System.out.println(curID + name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
 					size);
@@ -121,7 +116,47 @@ public class WishList extends JComponent {
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
-		doggy2.setBounds(21, 45, 144, 156);
+		doggy2.setBounds(25, 50, 450, 421);
+		JButton exitWIsh = new JButton("Return to Pets");
+		exitWIsh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.getContentPane().setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				sampleFrame.setVisible(true);
+			}
+		});
+		// Wish Button
+		this.add(exitWIsh);
+		exitWIsh.setBounds(25, 10, 138, 38);
+		JButton leftBackButton = new JButton("View Next");
+		this.add(leftBackButton);
+		leftBackButton.setBounds(273, 531, 121, 45);
+		leftBackButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				counter++;
+				if (counter >= max) {
+					counter = 1;
+				}
+			}
+		});
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
@@ -134,8 +169,12 @@ public class WishList extends JComponent {
 		bioOfAnimal.setOpaque(true);
 		bioOfAnimal.setBackground(new Color(150, 150, 150));
 		add(bioOfAnimal);
-		bioOfAnimal.setBounds(10, 228, 173, 300);
+		bioOfAnimal.setBounds(25, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
+		
+		JButton adoptNow = new JButton("Adopt Now");
+		adoptNow.setBounds(273, 665, 121, 45);
+		add(adoptNow);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
