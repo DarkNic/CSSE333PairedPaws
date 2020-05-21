@@ -27,8 +27,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class CreditCardPage extends JComponent {
 	/**
@@ -47,6 +49,8 @@ public class CreditCardPage extends JComponent {
 	private JPasswordField expMonth;
 	private JPasswordField expYear;
 	private JPasswordField cvcNummy;
+	private JTextField nameCard;
+	private JTextField codeZip;
 
 	public CreditCardPage(Connection con2, int animalID) {
 		this.curID = animalID;
@@ -55,7 +59,7 @@ public class CreditCardPage extends JComponent {
 
 	private void init(Connection con2) {
 		this.setName("Matched!");
-		this.setSize(496, 432);
+		this.setSize(496, 515);
 		this.con = con2;
 		this.loggedUser = Main.loggedUser;
 		this.con = con2;
@@ -67,11 +71,11 @@ public class CreditCardPage extends JComponent {
 		enterNumLab.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		enterNumLab.setHorizontalAlignment(SwingConstants.CENTER);
 		enterNumLab.setVerticalAlignment(SwingConstants.TOP);
-		enterNumLab.setBounds(95, 79, 273, 22);
+		enterNumLab.setBounds(95, 150, 273, 22);
 		add(enterNumLab);
 
 		cardNum = new JPasswordField();
-		cardNum.setBounds(22, 102, 445, 34);
+		cardNum.setBounds(22, 173, 445, 34);
 		add(cardNum);
 
 		JLabel pageTitle_1 = new JLabel("Enter Credit Card Info");
@@ -85,42 +89,63 @@ public class CreditCardPage extends JComponent {
 		lblMonth.setVerticalAlignment(SwingConstants.TOP);
 		lblMonth.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMonth.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblMonth.setBounds(83, 175, 135, 22);
+		lblMonth.setBounds(83, 246, 135, 22);
 		add(lblMonth);
 
 		expMonth = new JPasswordField();
-		expMonth.setBounds(83, 196, 135, 34);
+		expMonth.setBounds(83, 267, 135, 34);
 		add(expMonth);
 
 		expYear = new JPasswordField();
-		expYear.setBounds(251, 196, 135, 34);
+		expYear.setBounds(251, 267, 135, 34);
 		add(expYear);
 
 		JLabel lblExpYear = new JLabel("Experation Year");
 		lblExpYear.setVerticalAlignment(SwingConstants.TOP);
 		lblExpYear.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExpYear.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblExpYear.setBounds(251, 175, 135, 22);
+		lblExpYear.setBounds(251, 246, 135, 22);
 		add(lblExpYear);
 
 		cvcNummy = new JPasswordField();
-		cvcNummy.setBounds(167, 282, 135, 34);
+		cvcNummy.setBounds(83, 359, 135, 34);
 		add(cvcNummy);
 
 		JLabel lblCvcNumber = new JLabel("CVC Number");
 		lblCvcNumber.setVerticalAlignment(SwingConstants.TOP);
 		lblCvcNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCvcNumber.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblCvcNumber.setBounds(167, 261, 135, 22);
+		lblCvcNumber.setBounds(83, 334, 135, 22);
 		add(lblCvcNumber);
 
 		JButton btnNewButton = new JButton("Process Transaction");
 		btnNewButton.setFont(new Font("Segoe UI", Font.BOLD, 17));
-		btnNewButton.setBounds(22, 358, 445, 51);
+		btnNewButton.setBounds(22, 430, 445, 51);
 		add(btnNewButton);
-		System.out.println("Curry: " + curID);
-		init(con);
-		loadNext();
+
+		JLabel zipCode = new JLabel("Zip Code");
+		zipCode.setVerticalAlignment(SwingConstants.TOP);
+		zipCode.setHorizontalAlignment(SwingConstants.CENTER);
+		zipCode.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		zipCode.setBounds(251, 334, 135, 22);
+		add(zipCode);
+
+		JLabel nameOnCard = new JLabel("Name on Card");
+		nameOnCard.setVerticalAlignment(SwingConstants.TOP);
+		nameOnCard.setHorizontalAlignment(SwingConstants.CENTER);
+		nameOnCard.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		nameOnCard.setBounds(95, 69, 273, 22);
+		add(nameOnCard);
+
+		nameCard = new JTextField();
+		nameCard.setBounds(25, 96, 442, 34);
+		add(nameCard);
+		nameCard.setColumns(10);
+
+		codeZip = new JTextField();
+		codeZip.setColumns(10);
+		codeZip.setBounds(261, 359, 125, 34);
+		add(codeZip);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -130,10 +155,11 @@ public class CreditCardPage extends JComponent {
 				if (!valid) {
 					JFrame error = new JFrame();
 					JOptionPane.showMessageDialog(error,
-							"Invalid Credit Card Number. " + "" + 
-					"Error Number 1159997114108101116116", "Error ",
+							"Invalid Credit Card Number. " + "" + "Error Number 1159997114108101116116", "Error ",
 							JOptionPane.ERROR_MESSAGE);
 					error.setVisible(true);
+				} else {
+					System.out.println("Valid Credit Card");
 				}
 			}
 		});
@@ -141,6 +167,10 @@ public class CreditCardPage extends JComponent {
 	}
 
 	public boolean validateCreditCard() {
+
+		if (!nameCard.getText().matches(("([A-Za-z])+( [A-Za-z]+)"))) {
+			return false;
+		}
 
 		char[] card = cardNum.getPassword();
 		ArrayList<Integer> cardNum = new ArrayList<Integer>();
@@ -152,7 +182,9 @@ public class CreditCardPage extends JComponent {
 		if (card.length < 13 || card.length > 16) {
 			return false;
 		}
-
+		if (codeZip.getText().length() != 5) {
+			return false;
+		}
 		for (int f = 0; f < cardNum.size(); f++) {
 			int temp = cardNum.get(f);
 			if (f % 2 == 0) {
@@ -174,6 +206,15 @@ public class CreditCardPage extends JComponent {
 		}
 
 		if (sum % 10 == 0) {
+			if (expMonth.getPassword().length != 2) {
+				return false;
+			}
+			if (expYear.getPassword().length != 4) {
+				return false;
+			}
+			if (cvcNummy.getPassword().length < 2 || cvcNummy.getPassword().length > 6) {
+				return false;
+			}
 			return true;
 		} else {
 			return false;

@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -119,6 +120,26 @@ public class MatchPage extends JComponent {
 		adoptNow.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		adoptNow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.add(new AdoptionPage(con, curID));
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				sampleFrame.setVisible(true);
 			}
 		});
 		adoptNow.setBounds(25, 613, 211, 53);

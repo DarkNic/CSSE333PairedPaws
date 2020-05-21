@@ -135,6 +135,7 @@ public class AdoptionPage extends JComponent {
 				sampleFrame.getContentPane().add(new CreditCardPage(con, curID));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
+				System.out.println("Here");
 				
 			}
 		});
