@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -153,13 +154,10 @@ public class CreditCardPage extends JComponent {
 			public void actionPerformed(ActionEvent e) {
 				boolean valid = validateCreditCard();
 				if (!valid) {
-					JFrame error = new JFrame();
-					JOptionPane.showMessageDialog(error,
-							"Invalid Credit Card Number. " + "" + "Error Number 1159997114108101116116", "Error ",
+					JOptionPane.showMessageDialog(getParent(),
+							"Invalid Credit Card Information. " + "" + "Error Number: 1159997114108101116116", "Error ",
 							JOptionPane.ERROR_MESSAGE);
-					error.setVisible(true);
 				} else {
-					System.out.println("Valid Credit Card");
 				}
 			}
 		});
@@ -167,8 +165,18 @@ public class CreditCardPage extends JComponent {
 	}
 
 	public boolean validateCreditCard() {
-
+		/**
+		 * This method is used to validate all information given into credit card. It
+		 * uses a regex to validate name, luhn's alogrithm to verify number, and other
+		 * various length checks.
+		 * 
+		 * @return boolean on whether the info entered is valid.
+		 */
 		if (!nameCard.getText().matches(("([A-Za-z])+( [A-Za-z]+)"))) {
+			return false;
+		}
+
+		if (!codeZip.getText().matches("^[0-9]*$")) {
 			return false;
 		}
 

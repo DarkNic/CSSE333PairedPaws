@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -93,7 +96,7 @@ public class AdoptionPage extends JComponent {
 		s = name;
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
-		doggy2.setBounds(136, 30, 204, 208);
+		doggy2.setBounds(37, 22, 417, 407);
 		// Making the HTML in this block
 		String toInsert = exampleString.replaceFirst("R1", name);
 		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
@@ -104,11 +107,11 @@ public class AdoptionPage extends JComponent {
 		String hope = cap.replaceFirst("R9", age);
 		JLabel congrats = new JLabel("Your furry friend");
 		congrats.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		congrats.setBounds(10, 293, 293, 42);
+		congrats.setBounds(10, 439, 293, 42);
 		add(congrats);
 		JLabel match = new JLabel("is waiting on you!");
 		match.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		match.setBounds(10, 371, 211, 42);
+		match.setBounds(10, 517, 211, 42);
 		add(match);
 		JButton creditButt = new JButton("Credit Card");
 		creditButt.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -135,27 +138,52 @@ public class AdoptionPage extends JComponent {
 				sampleFrame.getContentPane().add(new CreditCardPage(con, curID));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
-				System.out.println("Here");
-				
+
 			}
 		});
 		creditButt.setBounds(37, 621, 184, 53);
 		add(creditButt);
 		JLabel petName = new JLabel(name);
 		petName.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		petName.setBounds(10, 334, 211, 42);
+		petName.setBounds(10, 480, 211, 42);
 		add(petName);
-		
+
 		JLabel checkoutTitle = new JLabel("Check Out Now!");
 		checkoutTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		checkoutTitle.setBounds(159, 569, 211, 42);
 		add(checkoutTitle);
-		
-		JButton PayPal = new JButton("PayPal");
-		PayPal.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		PayPal.setBounds(260, 621, 184, 53);
-		add(PayPal);
-		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+
+		JButton payPal = new JButton("PayPal");
+		payPal.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		payPal.setBounds(260, 621, 184, 53);
+		add(payPal);
+		payPal.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.getContentPane().setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.getContentPane().add(new payPal(con, curID));
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				sampleFrame.setVisible(true);
+
+			}
+		});
 	}
 
 	public static class ImagePanel extends JPanel {
