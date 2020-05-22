@@ -52,7 +52,7 @@ public class Main {
 			// ex.printStackTrace();
 		}
 		con = new ConnectionTHHS(server, name);
-		System.out.println(con.connect(uname, pass) ? "Connected!" : "Failed to Connect.");
+		//System.out.println(con.connect(uname, pass) ? "Connected!" : "Failed to Connect.");
 	}
 
 	/**

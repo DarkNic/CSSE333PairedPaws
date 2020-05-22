@@ -40,7 +40,7 @@ public class MatchPage extends JComponent {
 
 	public MatchPage(Connection con2, int animalID) {
 		this.curID = animalID;
-		System.out.println("Curry: " + curID);
+		////System.out.println("Curry: " + curID);
 		init(con2);
 		loadNext();
 	}
@@ -62,7 +62,7 @@ public class MatchPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
-			System.out.println("CurHere: " + curID);
+			//System.out.println("CurHere: " + curID);
 			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
 			state.setInt(1, curID);
 			ResultSet rs = state.executeQuery();
@@ -79,7 +79,7 @@ public class MatchPage extends JComponent {
 		} catch (SQLException e) {
 			// e.printStackTrace();
 		}
-		System.out.println(name + house + fixed + stage + intake + gender + age);
+		//System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {

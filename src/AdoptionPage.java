@@ -64,7 +64,7 @@ public class AdoptionPage extends JComponent {
 		String age = null;
 		String size = null;
 		try {
-			System.out.println("CurHere: " + curID);
+			//////System.out.println("CurHere: " + curID);
 			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
 			state.setInt(1, curID);
 			ResultSet rs = state.executeQuery();
@@ -81,7 +81,7 @@ public class AdoptionPage extends JComponent {
 		} catch (SQLException e) {
 			// e.printStackTrace();
 		}
-		System.out.println(name + house + fixed + stage + intake + gender + age);
+		//System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Female" : "Male", age, size);
 		} catch (IOException e) {

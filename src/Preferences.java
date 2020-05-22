@@ -57,7 +57,7 @@ public class Preferences extends JComponent {
 				String query = "exec Get_anIDs_with_prefs " + boolToString(oldbool) + ", " + boolToString(dogbool)
 						+ ", " + boolToString(catbool) + ", " + boolToString(malebool) + ", " + boolToString(femalebool)
 						+ ", " + boolToString(fixedbool) + ", " + boolToString(breedbool);
-				System.out.println(query);
+				//System.out.println(query);
 				newWindow(query);
 			}
 

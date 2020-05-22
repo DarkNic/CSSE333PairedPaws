@@ -96,7 +96,7 @@ public class WishList extends JComponent {
 			// e.printStackTrace();
 		}
 		counter++;
-		System.out.println(curID + name + house + fixed + stage + intake + gender + age);
+		//System.out.println(curID + name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
 					size);
@@ -198,20 +198,20 @@ public class WishList extends JComponent {
 			if (ids.size() == 0) {
 				throw new Exception();
 			}
-			System.out.println("Loaded query");
+			//System.out.println("Loaded query");
 		} catch (Exception e) {
-			System.out.println("Did not load query");
+			//System.out.println("Did not load query");
 			try {
 				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
 				ResultSet rs = state.executeQuery();
 				while (rs.next()) {
 					ids.add(rs.getInt("AnimalID"));
 				}
-				System.out.println("Loaded alternate");
+				//System.out.println("Loaded alternate");
 			} catch (SQLException r) {
 				// r.printStackTrace();
 			}
-			System.out.println(ids);
+			//System.out.println(ids);
 		}
 	}
 

@@ -51,7 +51,7 @@ public class DBModifyingFrame  extends JFrame{
 					}
 				}
 				//Ideally, this inputs the action into a method that calls the proper action. the other approach is to have if statements
-				System.out.println("Action confirmed"+actionString);
+				//System.out.println("Action confirmed"+actionString);
 			}
 		});
 		
@@ -73,7 +73,7 @@ public class DBModifyingFrame  extends JFrame{
 					
 					}
 					else {
-						System.out.println("Please select a entity to continue");
+						//System.out.println("Please select a entity to continue");
 					}
 			}
 		});
