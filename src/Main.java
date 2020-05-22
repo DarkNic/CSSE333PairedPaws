@@ -88,8 +88,6 @@ public class Main {
 		welcome.getContentPane().setLayout(null);
 		welcome.setJMenuBar(menu);
 		welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		welcome.setVisible(true);
-		welcome.repaint();
 		JPanel doggy1 = new ImagePanel(1);
 		welcome.getContentPane().add(doggy1);
 		doggy1.setBounds(172, 112, 574, 451);
@@ -133,6 +131,9 @@ public class Main {
 				fun.setVisible(true);
 			}
 		});
+		welcome.repaint();
+		welcome.setVisible(true);
+
 	}
 
 	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
