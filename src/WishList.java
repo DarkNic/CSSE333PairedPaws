@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -65,126 +66,128 @@ public class WishList extends JComponent {
 	}
 
 	private void loadNext() {
-		if (counter >= max) {
-			counter = 0;
-		}
-		curID = ids.get(counter);
-		Connection scarlett = con;
-		String name = null;
-		int house = 0;
-		int fixed = 0;
-		String stage = null;
-		String intake = null;
-		int gender = 0;
-		String age = null;
-		String size = null;
-		try {
-			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
-			state.setInt(1, curID);
-			ResultSet rs = state.executeQuery();
-			while (rs.next()) {
-				name = rs.getString("petName");
-				house = rs.getInt("houseTrained");
-				fixed = rs.getInt("fixed");
-				stage = rs.getString("stage");
-				intake = rs.getString("intakeDate").replace("00:00:00.0", "");
-				gender = rs.getInt("gender");
-				age = rs.getString("age");
-				size = rs.getString("size");
+		if (ids.size() > 0) {
+			if (counter >= max) {
+				counter = 0;
 			}
-		} catch (SQLException e) {
-			// e.printStackTrace();
-		}
-		counter++;
-		//System.out.println(curID + name + house + fixed + stage + intake + gender + age);
-		try {
-			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
-					size);
-		} catch (IOException e) {
-			// e.printStackTrace();
+			curID = ids.get(counter);
+			Connection scarlett = con;
+			String name = null;
+			int house = 0;
+			int fixed = 0;
+			String stage = null;
+			String intake = null;
+			int gender = 0;
+			String age = null;
+			String size = null;
+			try {
+				CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
+				state.setInt(1, curID);
+				ResultSet rs = state.executeQuery();
+				while (rs.next()) {
+					name = rs.getString("petName");
+					house = rs.getInt("houseTrained");
+					fixed = rs.getInt("fixed");
+					stage = rs.getString("stage");
+					intake = rs.getString("intakeDate").replace("00:00:00.0", "");
+					gender = rs.getInt("gender");
+					age = rs.getString("age");
+					size = rs.getString("size");
+				}
+			} catch (SQLException e) {
+				// e.printStackTrace();
+			}
+			try {
+				makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female",
+						age, size);
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
 		}
 	}
 
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
-		i = curID;
-		s = name;
-		JPanel doggy2 = new ImagePanel(curID);
-		this.add(doggy2);
-		doggy2.setBounds(25, 50, 450, 421);
-		JButton nextButt = new JButton("View Next");
-		nextButt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				counter++;
-				if (counter >= max) {
-					counter = 1;
+		if (ids.size() > 0) {
+			i = curID;
+			s = name;
+			JPanel doggy2 = new ImagePanel(curID);
+			this.add(doggy2);
+			doggy2.setBounds(25, 50, 450, 421);
+			JButton nextButt = new JButton("View Next");
+			nextButt.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					counter++;
+					if (counter >= max) {
+						counter = 1;
+					}
+					loadNext();
 				}
-				loadNext();
-			}
-		});
-		this.add(nextButt);
-		nextButt.setBounds(273, 607, 173, 45);
-		nextButt.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				counter++;
-				if (counter >= max) {
-					counter = 1;
+			});
+			this.add(nextButt);
+			nextButt.setBounds(273, 607, 173, 45);
+			nextButt.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					counter++;
+					if (counter >= max) {
+						counter = 1;
+					}
 				}
-			}
-		});
-		// Making the HTML in this block
-		String toInsert = exampleString.replaceFirst("R1", name);
-		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
-		String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
-		String blackWidow = scarlett.replaceFirst("R4", stage);
-		String glock = blackWidow.replaceFirst("R6", intake);
-		String cap = glock.replaceFirst("R7", size);
-		String hope = cap.replaceFirst("R9", age);
-		JLabel bioOfAnimal = new JLabel(hope);
-		bioOfAnimal.setOpaque(true);
-		bioOfAnimal.setBackground(new Color(150, 150, 150));
-		add(bioOfAnimal);
-		bioOfAnimal.setBounds(25, 494, 173, 300);
-		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-		JButton adoptNow = new JButton("Adopt Now");
-		adoptNow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JMenuBar menu = new JMenuBar();
-				JMenu HomePage = new JMenu("Home");
-				JMenu wishList = new JMenu("Wish List");
-				JMenu account = new JMenu("Account");
-				JMenuItem personalProfile = new JMenuItem("My Profile");
-				JMenuItem settings = new JMenuItem("Settings");
-				JMenuItem logOut = new JMenuItem("Log Out");
-				account.add(personalProfile);
-				account.add(settings);
-				account.add(logOut);
-				menu.add(HomePage);
-				menu.add(wishList);
-				menu.add(account);
-				JFrame sampleFrame = new JFrame();
-				sampleFrame.setSize(600, 1000);
-				sampleFrame.getContentPane().setLayout(null);
-				sampleFrame.setJMenuBar(menu);
-				sampleFrame.getContentPane().add(new AdoptionPage(con, curID));
-				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				sampleFrame.setVisible(true);
-			}
-		});
-		adoptNow.setBounds(273, 683, 173, 45);
-		add(adoptNow);
-		JButton removeWish = new JButton("Remove From WishList");
-		removeWish.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (WishListOperations.remove(Main.loggedUser, i)) {
-					JOptionPane.showMessageDialog(null, s + " removed from your wishlist.");
+			});
+			// Making the HTML in this block
+			String toInsert = exampleString.replaceFirst("R1", name);
+			String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
+			String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
+			String blackWidow = scarlett.replaceFirst("R4", stage);
+			String glock = blackWidow.replaceFirst("R6", intake);
+			String cap = glock.replaceFirst("R7", size);
+			String hope = cap.replaceFirst("R9", age);
+			JLabel bioOfAnimal = new JLabel(hope);
+			bioOfAnimal.setOpaque(true);
+			bioOfAnimal.setBackground(new Color(150, 150, 150));
+			add(bioOfAnimal);
+			bioOfAnimal.setBounds(25, 494, 173, 300);
+			bioOfAnimal.setFont(new Font("Verdana", 1, 15));
+			JButton adoptNow = new JButton("Adopt Now");
+			adoptNow.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JMenuBar menu = new JMenuBar();
+					JMenu HomePage = new JMenu("Home");
+					JMenu wishList = new JMenu("Wish List");
+					JMenu account = new JMenu("Account");
+					JMenuItem personalProfile = new JMenuItem("My Profile");
+					JMenuItem settings = new JMenuItem("Settings");
+					JMenuItem logOut = new JMenuItem("Log Out");
+					account.add(personalProfile);
+					account.add(settings);
+					account.add(logOut);
+					menu.add(HomePage);
+					menu.add(wishList);
+					menu.add(account);
+					JFrame sampleFrame = new JFrame();
+					sampleFrame.setSize(600, 1000);
+					sampleFrame.getContentPane().setLayout(null);
+					sampleFrame.setJMenuBar(menu);
+					sampleFrame.getContentPane().add(new AdoptionPage(con, curID));
+					sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					sampleFrame.setVisible(true);
 				}
-			}
-		});
-		removeWish.setBounds(273, 534, 173, 45);
-		add(removeWish);
+			});
+			adoptNow.setBounds(273, 683, 173, 45);
+			add(adoptNow);
+			JButton removeWish = new JButton("Remove From WishList");
+			removeWish.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (WishListOperations.remove(Main.loggedUser, i)) {
+						JOptionPane.showMessageDialog(null, s + " removed from your wishlist.");
+					}
+				}
+			});
+			removeWish.setBounds(273, 534, 173, 45);
+			add(removeWish);
+		}
 	}
 
 	private void getAnimals(String query) {
@@ -198,20 +201,10 @@ public class WishList extends JComponent {
 			if (ids.size() == 0) {
 				throw new Exception();
 			}
-			//System.out.println("Loaded query");
 		} catch (Exception e) {
-			//System.out.println("Did not load query");
-			try {
-				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
-				ResultSet rs = state.executeQuery();
-				while (rs.next()) {
-					ids.add(rs.getInt("AnimalID"));
-				}
-				//System.out.println("Loaded alternate");
-			} catch (SQLException r) {
-				// r.printStackTrace();
-			}
-			//System.out.println(ids);
+			JOptionPane.showMessageDialog(getParent(),
+					"No animals in wish list. " + "" + "Error Number: 1159997114108101116116", "Error ",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
