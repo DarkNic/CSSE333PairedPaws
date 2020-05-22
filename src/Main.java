@@ -22,11 +22,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import DB_connect.ConnectionTHHS;
-import javax.swing.SwingConstants;
 
 public class Main {
 	private static final int NUMBER_OF_SIMULATIONS = 3;
@@ -52,7 +51,7 @@ public class Main {
 			// ex.printStackTrace();
 		}
 		con = new ConnectionTHHS(server, name);
-		//System.out.println(con.connect(uname, pass) ? "Connected!" : "Failed to Connect.");
+		System.out.println(con.connect(uname, pass) ? "Connected!" : "Failed to Connect.");
 	}
 
 	/**
@@ -72,15 +71,13 @@ public class Main {
 		menu.add(account);
 		menu.add(logOut);
 		account.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame=new JFrame();
-				JLabel label=new JLabel("Please log into the project to view your account.");
+				JFrame frame = new JFrame();
+				JLabel label = new JLabel("Please log into the project to view your account.");
 				frame.getContentPane().add(label);
-//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				// frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
-				
 			}
 		});
 		JFrame welcome = new JFrame("PairedPaws");
@@ -109,13 +106,11 @@ public class Main {
 		registerButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		welcome.getContentPane().add(registerButton);
 		registerButton.setBounds(500, 750, 150, 75);
-		
 		JLabel LabelPair = new JLabel("Paired Paws!");
 		LabelPair.setHorizontalAlignment(SwingConstants.CENTER);
 		LabelPair.setFont(new Font("Segoe UI", Font.BOLD, 43));
 		LabelPair.setBounds(246, 41, 404, 61);
 		welcome.getContentPane().add(LabelPair);
-		
 		JLabel lblByLucusBendzsa = new JLabel("By Lucus Bendzsa, Sam Munro, and Nick Bohner");
 		lblByLucusBendzsa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblByLucusBendzsa.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -133,7 +128,6 @@ public class Main {
 		});
 		welcome.repaint();
 		welcome.setVisible(true);
-
 	}
 
 	private static ArrayList<Animal> createProfiles(ArrayList<Animal> arrayList) {
