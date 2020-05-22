@@ -138,6 +138,7 @@ public class UserOperations {
 			cs.close();
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			String error = "An error occurred.";
 			if (ret == 1)
 				error = "Must be logged in to add a payment method";

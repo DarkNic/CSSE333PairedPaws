@@ -60,7 +60,8 @@ public class PetPage extends JComponent {
 	private void init(Connection scarlett, String query) {
 		this.scarlett = scarlett;
 		this.setName("Find Your Furry Friend");
-		https: // docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
+		// https: //
+		// docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
 		this.setSize(496, 794);
 		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();
@@ -127,32 +128,24 @@ public class PetPage extends JComponent {
 				menu.add(account);
 				menu.add(logOut);
 				logOut.addActionListener(new ActionListener() {
-					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//Close all JFrames and open a new main
-						
+						// Close all JFrames and open a new main
 						////////////////////////////////////////
-						}
+					}
 				});
-				
 				account.addActionListener(new ActionListener() {
-					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//set current frame visibility to false and open new account
-						UserFrame user=new UserFrame(Main.loggedUser, Main.con);
+						// set current frame visibility to false and open new account
+						UserFrame user = new UserFrame(Main.loggedUser, Main.con);
 						user.setVisible(true);
 					}
 				});
-				
 				JFrame sampleFrame = new JFrame();
 				sampleFrame.setSize(600, 1000);
 				sampleFrame.getContentPane().setLayout(null);
 				sampleFrame.setJMenuBar(menu);
-				
-
-				
 				sampleFrame.getContentPane().add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
@@ -202,11 +195,17 @@ public class PetPage extends JComponent {
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(154, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
 		JButton wishButton_1 = new JButton("Add to Wish List");
+		wishButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (WishListOperations.add(Main.loggedUser, i)) {
+					JOptionPane.showMessageDialog(null, s + " added to Wish List!");
+				}
+			}
+		});
 		wishButton_1.setBounds(337, 10, 138, 38);
 		add(wishButton_1);
-
 		JButton btnResetPreferences = new JButton("Reset Preferences");
 		btnResetPreferences.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
