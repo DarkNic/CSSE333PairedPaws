@@ -3,7 +3,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,7 +17,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,8 +26,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 
 public class WishList extends JComponent {
 	/**
@@ -152,7 +148,6 @@ public class WishList extends JComponent {
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(25, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-
 		JButton adoptNow = new JButton("Adopt Now");
 		adoptNow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -180,8 +175,15 @@ public class WishList extends JComponent {
 		});
 		adoptNow.setBounds(273, 683, 173, 45);
 		add(adoptNow);
-
 		JButton removeWish = new JButton("Remove From WishList");
+		removeWish.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (WishListOperations.remove(Main.loggedUser, i)) {
+					JOptionPane.showMessageDialog(null, s + " removed from your wishlist.");
+				}
+			}
+		});
 		removeWish.setBounds(273, 534, 173, 45);
 		add(removeWish);
 	}
