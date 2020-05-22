@@ -136,9 +136,9 @@ public class PetPage extends JComponent {
 				menu.add(account);
 				JFrame sampleFrame = new JFrame();
 				sampleFrame.setSize(600, 1000);
-				sampleFrame.setLayout(null);
+				sampleFrame.getContentPane().setLayout(null);
 				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
+				sampleFrame.getContentPane().add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
 			}
@@ -149,6 +149,7 @@ public class PetPage extends JComponent {
 		JButton rightNextButton = new JButton("LOVE");
 		rightNextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new AdoptionPage(con, curID);
 			}
 		});
 		rightNextButton.addMouseListener(new MouseAdapter() {
@@ -190,6 +191,17 @@ public class PetPage extends JComponent {
 		JButton wishButton_1 = new JButton("Add to Wish List");
 		wishButton_1.setBounds(337, 10, 138, 38);
 		add(wishButton_1);
+
+		JButton btnResetPreferences = new JButton("Reset Preferences");
+		btnResetPreferences.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ids.clear();
+				getAnimals(null);
+				max = ids.size();
+			}
+		});
+		btnResetPreferences.setBounds(173, 10, 154, 38);
+		add(btnResetPreferences);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
