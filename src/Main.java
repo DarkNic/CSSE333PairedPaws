@@ -26,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import DB_connect.ConnectionTHHS;
+import javax.swing.SwingConstants;
 
 public class Main {
 	private static final int NUMBER_OF_SIMULATIONS = 3;
@@ -76,38 +77,26 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame=new JFrame();
 				JLabel label=new JLabel("Please log into the project to view your account.");
-				frame.add(label);
+				frame.getContentPane().add(label);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
 				
 			}
 		});
-		
-		
-		
-		JPanel welcomeBanner = new JPanel();
-		JLabel jlabel = new JLabel("Welcome!");
-		jlabel.setFont(new Font("Verdana", 1, 60));
-		welcomeBanner.add(jlabel);
 		JFrame welcome = new JFrame("PairedPaws");
 		welcome.setSize(1000, 1000);
-		welcome.setLayout(null);
+		welcome.getContentPane().setLayout(null);
 		welcome.setJMenuBar(menu);
 		welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		welcome.setVisible(true);
-		welcome.add(welcomeBanner);
-		welcomeBanner.setBounds(300, 100, 325, 100);
 		welcome.repaint();
 		JPanel doggy1 = new ImagePanel(1);
-		welcome.add(doggy1);
-		doggy1.setBounds(250, 200, 500, 400);
-		JLabel randomQuote = new JLabel("We're happy to see you!");
-		welcome.add(randomQuote);
-		randomQuote.setFont(new Font("Verdana", 1, 15));
-		randomQuote.setBounds(375, 600, 250, 50);
+		welcome.getContentPane().add(doggy1);
+		doggy1.setBounds(172, 112, 574, 451);
 		JButton loginButton = new JButton("Login");
-		welcome.add(loginButton);
-		loginButton.setBounds(300, 750, 150, 75);
+		loginButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		welcome.getContentPane().add(loginButton);
+		loginButton.setBounds(246, 750, 150, 75);
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,8 +108,21 @@ public class Main {
 			}
 		});
 		JButton registerButton = new JButton("Register");
-		welcome.add(registerButton);
+		registerButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		welcome.getContentPane().add(registerButton);
 		registerButton.setBounds(500, 750, 150, 75);
+		
+		JLabel LabelPair = new JLabel("Paired Paws!");
+		LabelPair.setHorizontalAlignment(SwingConstants.CENTER);
+		LabelPair.setFont(new Font("Segoe UI", Font.BOLD, 43));
+		LabelPair.setBounds(246, 41, 404, 61);
+		welcome.getContentPane().add(LabelPair);
+		
+		JLabel lblByLucusBendzsa = new JLabel("By Lucus Bendzsa, Sam Munro, and Nick Bohner");
+		lblByLucusBendzsa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblByLucusBendzsa.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblByLucusBendzsa.setBounds(172, 611, 574, 61);
+		welcome.getContentPane().add(lblByLucusBendzsa);
 		registerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
