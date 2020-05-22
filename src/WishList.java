@@ -171,11 +171,34 @@ public class WishList extends JComponent {
 		add(bioOfAnimal);
 		bioOfAnimal.setBounds(25, 494, 173, 300);
 		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-		
+
 		JButton adoptNow = new JButton("Adopt Now");
+		adoptNow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.add(new AdoptionPage(con, curID));
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				sampleFrame.setVisible(true);
+			}
+		});
 		adoptNow.setBounds(273, 665, 121, 45);
 		add(adoptNow);
-		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	}
 
 	private void getAnimals(String query) {
