@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -54,6 +56,22 @@ public class UserFrame extends JFrame {
 	}
 
 	private void createFrame() {
+		
+		JMenuBar menu = new JMenuBar();
+		JMenu account = new JMenu("Account");
+		JMenu logOut = new JMenu("Log Out");
+		menu.add(account);
+		menu.add(logOut);
+		logOut.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Close all JFrames and open a new main
+				
+				////////////////////////////////////////
+				}
+		});
+		
 		JLabel userLabel = new JLabel(this.userName);
 		JPanel panel = new JPanel();
 		// Add all the necessary info about the person into a appropriate view
@@ -65,6 +83,7 @@ public class UserFrame extends JFrame {
 		panel.add(userLabel);
 		panel.add(infoLabel);
 		this.add(panel);
+		this.setJMenuBar(menu);
 		adminButtons(panel);
 	}
 

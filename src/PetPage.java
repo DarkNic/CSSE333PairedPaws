@@ -122,22 +122,37 @@ public class PetPage extends JComponent {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JMenuBar menu = new JMenuBar();
-				JMenu HomePage = new JMenu("Home");
-				JMenu wishList = new JMenu("Wish List");
 				JMenu account = new JMenu("Account");
-				JMenuItem personalProfile = new JMenuItem("My Profile");
-				JMenuItem settings = new JMenuItem("Settings");
-				JMenuItem logOut = new JMenuItem("Log Out");
-				account.add(personalProfile);
-				account.add(settings);
-				account.add(logOut);
-				menu.add(HomePage);
-				menu.add(wishList);
+				JMenu logOut = new JMenu("Log Out");
 				menu.add(account);
+				menu.add(logOut);
+				logOut.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//Close all JFrames and open a new main
+						
+						////////////////////////////////////////
+						}
+				});
+				
+				account.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//set current frame visibility to false and open new account
+						UserFrame user=new UserFrame(Main.loggedUser, Main.con);
+						user.setVisible(true);
+					}
+				});
+				
 				JFrame sampleFrame = new JFrame();
 				sampleFrame.setSize(600, 1000);
 				sampleFrame.getContentPane().setLayout(null);
 				sampleFrame.setJMenuBar(menu);
+				
+
+				
 				sampleFrame.getContentPane().add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);

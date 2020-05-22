@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -17,6 +19,32 @@ public class SearchFrame extends JFrame{
 
 	private void constructFrame() {
 		//Make a similar search table to the lab although looking at DBModifyingFrame is pretty close as well		
+		JMenuBar menu = new JMenuBar();
+		JMenu account = new JMenu("Account");
+		JMenu logOut = new JMenu("Log Out");
+		menu.add(account);
+		menu.add(logOut);
+		logOut.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Close all JFrames and open a new main
+				
+				////////////////////////////////////////
+				}
+		});
+		
+		account.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//set current frame visibility to false and open new account
+				UserFrame user=new UserFrame(Main.loggedUser, Main.con);
+				user.setVisible(true);
+				closeFrame();
+			}
+		});
+		
 		this.setSize(1000, 1000);
 		String[] entities= new String[] {"None, Person, Cat, Dog"};
 		
@@ -34,7 +62,7 @@ public class SearchFrame extends JFrame{
 	    this.add(addButton);
 	    this.add(deleteButton);
 	    this.add(updateButton);
-	    
+	    this.setJMenuBar(menu);
 	    
 		
 		JComboBox<String> entityBox = new JComboBox<>(entities);
@@ -82,11 +110,6 @@ public class SearchFrame extends JFrame{
 			}
 		});
 		
-
-		
-		
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.setVisible(true);
 	}
 
 	
@@ -104,5 +127,9 @@ public class SearchFrame extends JFrame{
 		DogDialouge dialouge=new DogDialouge();
 		this.add(dialouge);
 	
+	}
+	private void closeFrame() {
+		//closest I can find atm to remove the frame without affecting other aspects of code
+		this.setVisible(false);
 	}
 }

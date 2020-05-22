@@ -66,18 +66,25 @@ public class Main {
 		// ArrayList<SimulationPanel> worlds = constructSimulations();
 		init();
 		JMenuBar menu = new JMenuBar();
-		JMenu HomePage = new JMenu("Home");
-		JMenu wishList = new JMenu("Wish List");
 		JMenu account = new JMenu("Account");
-		JMenuItem personalProfile = new JMenuItem("My Profile");
-		JMenuItem settings = new JMenuItem("Settings");
-		JMenuItem logOut = new JMenuItem("Log Out");
-		account.add(personalProfile);
-		account.add(settings);
-		account.add(logOut);
-		menu.add(HomePage);
-		menu.add(wishList);
+		JMenu logOut = new JMenu("Log Out");
 		menu.add(account);
+		menu.add(logOut);
+		account.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame=new JFrame();
+				JLabel label=new JLabel("Please log into the project to view your account.");
+				frame.add(label);
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.setVisible(true);
+				
+			}
+		});
+		
+		
+		
 		JPanel welcomeBanner = new JPanel();
 		JLabel jlabel = new JLabel("Welcome!");
 		jlabel.setFont(new Font("Verdana", 1, 60));
@@ -97,7 +104,7 @@ public class Main {
 		JLabel randomQuote = new JLabel("We're happy to see you!");
 		welcome.add(randomQuote);
 		randomQuote.setFont(new Font("Verdana", 1, 15));
-		randomQuote.setBounds(375, 600, 200, 50);
+		randomQuote.setBounds(375, 600, 250, 50);
 		JButton loginButton = new JButton("Login");
 		welcome.add(loginButton);
 		loginButton.setBounds(300, 750, 150, 75);
