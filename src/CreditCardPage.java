@@ -158,6 +158,12 @@ public class CreditCardPage extends JComponent {
 							"Invalid Credit Card Information. " + "" + "Error Number: 1159997114108101116116", "Error ",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e1) {
+					}
+					JOptionPane.showMessageDialog(getParent(), "Credit card payment processed.", "Sucess ",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
