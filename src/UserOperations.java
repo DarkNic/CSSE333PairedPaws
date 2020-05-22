@@ -100,7 +100,7 @@ public class UserOperations {
 			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call Add_Payment(?, ?)}");
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.setString(2, Main.loggedUser);
-			cs.setString(3, "Paypal");
+			cs.setString(3, "Credit");
 			cs.execute();
 			ret = cs.getInt(1);
 			if (ret != 0)
@@ -124,14 +124,13 @@ public class UserOperations {
 		return false;
 	}
 
-	public static boolean addAdoption(String uname, int anID, int payID) {
+	public static boolean addAdoption(String uname, int anID) {
 		int ret = 0;
 		try {
-			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call insert_Adoption(?,?,?)");
+			CallableStatement cs = Main.con.getConnection().prepareCall("{? = call insert_Adoption(?,?)}");
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.setString(2, uname);
 			cs.setInt(3, anID);
-			cs.setInt(4, payID);
 			cs.execute();
 			ret = cs.getInt(1);
 			if (ret != 0)
