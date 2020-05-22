@@ -56,7 +56,6 @@ public class WishList extends JComponent {
 	private void init(Connection scarlett, String query) {
 		this.scarlett = scarlett;
 		this.setName("Find Your Furry Friend");
-		https: // docs.google.com/document/d/1CBohG8vH6jYpjYVnP_w9MS0tSiatB1wPLKmHkh1NUiQ/edit
 		this.setSize(496, 794);
 		this.con = scarlett;
 		this.dogs = new ArrayList<Dog>();

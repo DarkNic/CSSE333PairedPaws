@@ -250,6 +250,7 @@ public class PetPage extends JComponent {
 			}
 			System.out.println("Loaded query");
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Did not load query");
 			try {
 				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");

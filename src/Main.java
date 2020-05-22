@@ -78,7 +78,7 @@ public class Main {
 				JFrame frame=new JFrame();
 				JLabel label=new JLabel("Please log into the project to view your account.");
 				frame.getContentPane().add(label);
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setVisible(true);
 				
 			}

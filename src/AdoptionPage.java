@@ -43,7 +43,6 @@ public class AdoptionPage extends JComponent {
 
 	public AdoptionPage(Connection con2, int animalID) {
 		this.curID = animalID;
-		System.out.println("Curry: " + curID);
 		init(con2);
 		loadNext();
 	}
