@@ -117,38 +117,19 @@ public class WishList extends JComponent {
 		JPanel doggy2 = new ImagePanel(curID);
 		this.add(doggy2);
 		doggy2.setBounds(25, 50, 450, 421);
-		JButton exitWIsh = new JButton("Return to Pets");
-		exitWIsh.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JMenuBar menu = new JMenuBar();
-				JMenu HomePage = new JMenu("Home");
-				JMenu wishList = new JMenu("Wish List");
-				JMenu account = new JMenu("Account");
-				JMenuItem personalProfile = new JMenuItem("My Profile");
-				JMenuItem settings = new JMenuItem("Settings");
-				JMenuItem logOut = new JMenuItem("Log Out");
-				account.add(personalProfile);
-				account.add(settings);
-				account.add(logOut);
-				menu.add(HomePage);
-				menu.add(wishList);
-				menu.add(account);
-				JFrame sampleFrame = new JFrame();
-				sampleFrame.setSize(600, 1000);
-				sampleFrame.getContentPane().setLayout(null);
-				sampleFrame.setJMenuBar(menu);
-				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				sampleFrame.setVisible(true);
+		JButton nextButt = new JButton("View Next");
+		nextButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				counter++;
+				if (counter >= max) {
+					counter = 1;
+				}
+				loadNext();
 			}
 		});
-		// Wish Button
-		this.add(exitWIsh);
-		exitWIsh.setBounds(25, 10, 138, 38);
-		JButton leftBackButton = new JButton("View Next");
-		this.add(leftBackButton);
-		leftBackButton.setBounds(273, 531, 121, 45);
-		leftBackButton.addMouseListener(new MouseAdapter() {
+		this.add(nextButt);
+		nextButt.setBounds(273, 607, 173, 45);
+		nextButt.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				counter++;
@@ -190,15 +171,19 @@ public class WishList extends JComponent {
 				menu.add(account);
 				JFrame sampleFrame = new JFrame();
 				sampleFrame.setSize(600, 1000);
-				sampleFrame.setLayout(null);
+				sampleFrame.getContentPane().setLayout(null);
 				sampleFrame.setJMenuBar(menu);
-				sampleFrame.add(new AdoptionPage(con, curID));
+				sampleFrame.getContentPane().add(new AdoptionPage(con, curID));
 				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				sampleFrame.setVisible(true);
 			}
 		});
-		adoptNow.setBounds(273, 665, 121, 45);
+		adoptNow.setBounds(273, 683, 173, 45);
 		add(adoptNow);
+
+		JButton removeWish = new JButton("Remove From WishList");
+		removeWish.setBounds(273, 534, 173, 45);
+		add(removeWish);
 	}
 
 	private void getAnimals(String query) {
