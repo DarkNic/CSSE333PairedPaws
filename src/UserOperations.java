@@ -22,6 +22,7 @@ public class UserOperations {
 			cs.setString(2, uname);
 			cs.execute();
 			ret = cs.getInt(1);
+			System.out.println(ret);
 			if (ret != 0)
 				throw new SQLException();
 			cs.close();
@@ -36,9 +37,12 @@ public class UserOperations {
 			cs2.close();
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			String error = "An error occurred.";
 			if (ret == 1)
 				error = "Must be logged in to delete an account";
+			if (ret == 2)
+				error = "Cannot delete an account that has made an adoption.";
 			JOptionPane.showMessageDialog(null, error);
 		}
 		return false;

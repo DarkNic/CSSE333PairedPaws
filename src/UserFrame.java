@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -61,14 +62,12 @@ public class UserFrame extends JFrame {
 	}
 
 	private void createFrame() {
-
 		JMenuBar menu = new JMenuBar();
 		JMenu account = new JMenu("Account");
 		JMenu logOut = new JMenu("Log Out");
 		menu.add(account);
 		menu.add(logOut);
 		logOut.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeFrames();
@@ -76,7 +75,6 @@ public class UserFrame extends JFrame {
 				Main.main(args);
 			}
 		});
-
 		JLabel userLabel = new JLabel(this.userName);
 		JPanel panel = new JPanel();
 		// Add all the necessary info about the person into a appropriate view
@@ -101,14 +99,11 @@ public class UserFrame extends JFrame {
 		prefButton.setBounds(800, 500, 50, 50);
 		JButton viewWishListButton = new JButton("View Wish List");
 		viewWishListButton.setBounds(900, 500, 50, 50);
-
 		viewWishListButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent arg0) {
 				new WishList(Main.con.getConnection(), "Exec [getWishList] " + Main.loggedUser);
 			}
 		});
-
 		Connection connection = con.getConnection();
 		deleteAccountButton.addActionListener(new ActionListener() {
 			@Override
@@ -141,6 +136,8 @@ public class UserFrame extends JFrame {
 							Main.loggedUser = "";
 							state.close();
 						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null,
+									"If you've made an adoption, you cannot delete your account.");
 							// e2.printStackTrace();
 						}
 						delFrame.setVisible(false);
@@ -221,5 +218,4 @@ public class UserFrame extends JFrame {
 		pan.add(viewWishListButton);
 		this.add(pan);
 	}
-
 }
