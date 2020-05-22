@@ -58,8 +58,9 @@ public class WishList extends JComponent {
 			sampleFrame.add(this);
 			sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			sampleFrame.setVisible(true);
+
+			loadNext();
 		}
-		loadNext();
 
 	}
 
@@ -75,9 +76,6 @@ public class WishList extends JComponent {
 	}
 
 	private void loadNext() {
-		if (counter >= max) {
-			counter = 0;
-		}
 		curID = ids.get(counter);
 		Connection scarlett = con;
 		String name = null;
@@ -113,81 +111,80 @@ public class WishList extends JComponent {
 		}
 	}
 
-	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
+	private void makeGUI(int passID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
 
-		if (ids.size() > 0) {
-			i = curID;
-			s = name;
-			JPanel doggy2 = new ImagePanel(curID);
-			this.add(doggy2);
-			doggy2.setBounds(25, 50, 450, 421);
-			JButton nextButt = new JButton("View Next");
-			nextButt.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					counter++;
-					if (counter >= max) {
-						counter = 1;
-					}
-					loadNext();
+		i = passID;
+		s = name;
+		JPanel doggy2 = new ImagePanel(passID);
+		this.add(doggy2);
+		doggy2.setBounds(25, 50, 450, 421);
+		JButton nextButt = new JButton("View Next");
+		nextButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				counter++;
+				if (counter >= max) {
+					counter = 0;
 				}
-			});
-			this.add(nextButt);
-			nextButt.setBounds(273, 607, 173, 45);
+				curID = ids.get(counter);
+				loadNext();
+			}
+		});
+		this.add(nextButt);
+		nextButt.setBounds(273, 607, 173, 45);
 
-			// Making the HTML in this block
-			String toInsert = exampleString.replaceFirst("R1", name);
-			String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
-			String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
-			String blackWidow = scarlett.replaceFirst("R4", stage);
-			String glock = blackWidow.replaceFirst("R6", intake);
-			String cap = glock.replaceFirst("R7", size);
-			String hope = cap.replaceFirst("R9", age);
-			JLabel bioOfAnimal = new JLabel(hope);
-			bioOfAnimal.setOpaque(true);
-			bioOfAnimal.setBackground(new Color(150, 150, 150));
-			add(bioOfAnimal);
-			bioOfAnimal.setBounds(25, 494, 173, 300);
-			bioOfAnimal.setFont(new Font("Verdana", 1, 15));
-			JButton adoptNow = new JButton("Adopt Now");
-			adoptNow.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					JMenuBar menu = new JMenuBar();
-					JMenu HomePage = new JMenu("Home");
-					JMenu wishList = new JMenu("Wish List");
-					JMenu account = new JMenu("Account");
-					JMenuItem personalProfile = new JMenuItem("My Profile");
-					JMenuItem settings = new JMenuItem("Settings");
-					JMenuItem logOut = new JMenuItem("Log Out");
-					account.add(personalProfile);
-					account.add(settings);
-					account.add(logOut);
-					menu.add(HomePage);
-					menu.add(wishList);
-					menu.add(account);
-					JFrame sampleFrame = new JFrame();
-					sampleFrame.setSize(600, 1000);
-					sampleFrame.getContentPane().setLayout(null);
-					sampleFrame.setJMenuBar(menu);
-					sampleFrame.getContentPane().add(new AdoptionPage(con, curID));
-					sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					sampleFrame.setVisible(true);
+		// Making the HTML in this block
+		String toInsert = exampleString.replaceFirst("R1", name);
+		String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
+		String scarlett = newy.replaceFirst("R3", String.valueOf(fixed));
+		String blackWidow = scarlett.replaceFirst("R4", stage);
+		String glock = blackWidow.replaceFirst("R6", intake);
+		String cap = glock.replaceFirst("R7", size);
+		String hope = cap.replaceFirst("R9", age);
+		JLabel bioOfAnimal = new JLabel(hope);
+		bioOfAnimal.setOpaque(true);
+		bioOfAnimal.setBackground(new Color(150, 150, 150));
+		add(bioOfAnimal);
+		bioOfAnimal.setBounds(25, 494, 173, 300);
+		bioOfAnimal.setFont(new Font("Verdana", 1, 15));
+		JButton adoptNow = new JButton("Adopt Now");
+		adoptNow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JMenuBar menu = new JMenuBar();
+				JMenu HomePage = new JMenu("Home");
+				JMenu wishList = new JMenu("Wish List");
+				JMenu account = new JMenu("Account");
+				JMenuItem personalProfile = new JMenuItem("My Profile");
+				JMenuItem settings = new JMenuItem("Settings");
+				JMenuItem logOut = new JMenuItem("Log Out");
+				account.add(personalProfile);
+				account.add(settings);
+				account.add(logOut);
+				menu.add(HomePage);
+				menu.add(wishList);
+				menu.add(account);
+				JFrame sampleFrame = new JFrame();
+				sampleFrame.setSize(600, 1000);
+				sampleFrame.getContentPane().setLayout(null);
+				sampleFrame.setJMenuBar(menu);
+				sampleFrame.getContentPane().add(new AdoptionPage(con, curID));
+				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				sampleFrame.setVisible(true);
+			}
+		});
+		adoptNow.setBounds(273, 683, 173, 45);
+		add(adoptNow);
+		JButton removeWish = new JButton("Remove From WishList");
+		removeWish.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (WishListOperations.remove(Main.loggedUser, i)) {
+					JOptionPane.showMessageDialog(null, s + " removed from your wishlist.");
 				}
-			});
-			adoptNow.setBounds(273, 683, 173, 45);
-			add(adoptNow);
-			JButton removeWish = new JButton("Remove From WishList");
-			removeWish.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (WishListOperations.remove(Main.loggedUser, i)) {
-						JOptionPane.showMessageDialog(null, s + " removed from your wishlist.");
-					}
-				}
-			});
-			removeWish.setBounds(273, 534, 173, 45);
-			add(removeWish);
-		}
+			}
+		});
+		removeWish.setBounds(273, 534, 173, 45);
+		add(removeWish);
 	}
 
 	private void getAnimals(String query) {
