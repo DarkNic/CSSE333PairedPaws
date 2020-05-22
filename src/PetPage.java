@@ -103,7 +103,7 @@ public class PetPage extends JComponent {
 			// e.printStackTrace();
 		}
 		counter++;
-		//System.out.println(name + house + fixed + stage + intake + gender + age);
+		// System.out.println(name + house + fixed + stage + intake + gender + age);
 		try {
 			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
 					size);
@@ -113,10 +113,9 @@ public class PetPage extends JComponent {
 	}
 
 	private void closeFrames() {
-		((JFrame) this.getParent()).setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);				
+		((JFrame) this.getParent()).setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
-	
-	
+
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
 		i = curID;
@@ -127,35 +126,8 @@ public class PetPage extends JComponent {
 		JButton wishView = new JButton("View Wish List");
 		wishView.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JMenuBar menu = new JMenuBar();
-				JMenu account = new JMenu("Account");
-				JMenu logOut = new JMenu("Log Out");
-				menu.add(account);
-				menu.add(logOut);
-				logOut.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						closeFrames();
-						String[] args = new String[0];
-						Main.main(args);
-					}
-				});
-				account.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// set current frame visibility to false and open new account
-						UserFrame user = new UserFrame(Main.loggedUser, Main.con);
-						user.setVisible(true);
-					}
-				});
-				JFrame sampleFrame = new JFrame();
-				sampleFrame.setSize(600, 1000);
-				sampleFrame.getContentPane().setLayout(null);
-				sampleFrame.setJMenuBar(menu);
-				sampleFrame.getContentPane().add(new WishList(scarlett, "Exec [getWishList] " + Main.loggedUser));
-				sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				sampleFrame.setVisible(true);
+			public void actionPerformed(ActionEvent e) {
+				new WishList(Main.con.getConnection(), "Exec [getWishList] " + Main.loggedUser);
 			}
 		});
 		// Wish Button
@@ -248,21 +220,21 @@ public class PetPage extends JComponent {
 			if (ids.size() == 0) {
 				throw new Exception();
 			}
-			//System.out.println("Loaded query");
+			// System.out.println("Loaded query");
 		} catch (Exception e) {
 			e.printStackTrace();
-			//System.out.println("Did not load query");
+			// System.out.println("Did not load query");
 			try {
 				CallableStatement state = scarlett.prepareCall("{call Get_anIDs}");
 				ResultSet rs = state.executeQuery();
 				while (rs.next()) {
 					ids.add(rs.getInt("AnimalID"));
 				}
-				//System.out.println("Loaded alternate");
+				// System.out.println("Loaded alternate");
 			} catch (SQLException r) {
 				// r.printStackTrace();
 			}
-			//System.out.println(ids);
+			// System.out.println(ids);
 		}
 	}
 

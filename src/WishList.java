@@ -51,7 +51,16 @@ public class WishList extends JComponent {
 		init(scarlett, query);
 		getAnimals(query);
 		this.max = ids.size();
+		if (ids.size() > 0) {
+			JFrame sampleFrame = new JFrame();
+			sampleFrame.setSize(600, 1000);
+			sampleFrame.getContentPane().setLayout(null);
+			sampleFrame.add(this);
+			sampleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			sampleFrame.setVisible(true);
+		}
 		loadNext();
+
 	}
 
 	private void init(Connection scarlett, String query) {
@@ -66,48 +75,47 @@ public class WishList extends JComponent {
 	}
 
 	private void loadNext() {
-		if (ids.size() > 0) {
-			if (counter >= max) {
-				counter = 0;
+		if (counter >= max) {
+			counter = 0;
+		}
+		curID = ids.get(counter);
+		Connection scarlett = con;
+		String name = null;
+		int house = 0;
+		int fixed = 0;
+		String stage = null;
+		String intake = null;
+		int gender = 0;
+		String age = null;
+		String size = null;
+		try {
+			CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
+			state.setInt(1, curID);
+			ResultSet rs = state.executeQuery();
+			while (rs.next()) {
+				name = rs.getString("petName");
+				house = rs.getInt("houseTrained");
+				fixed = rs.getInt("fixed");
+				stage = rs.getString("stage");
+				intake = rs.getString("intakeDate").replace("00:00:00.0", "");
+				gender = rs.getInt("gender");
+				age = rs.getString("age");
+				size = rs.getString("size");
 			}
-			curID = ids.get(counter);
-			Connection scarlett = con;
-			String name = null;
-			int house = 0;
-			int fixed = 0;
-			String stage = null;
-			String intake = null;
-			int gender = 0;
-			String age = null;
-			String size = null;
-			try {
-				CallableStatement state = scarlett.prepareCall("{call Get_Specific_Pet_Info(?)}");
-				state.setInt(1, curID);
-				ResultSet rs = state.executeQuery();
-				while (rs.next()) {
-					name = rs.getString("petName");
-					house = rs.getInt("houseTrained");
-					fixed = rs.getInt("fixed");
-					stage = rs.getString("stage");
-					intake = rs.getString("intakeDate").replace("00:00:00.0", "");
-					gender = rs.getInt("gender");
-					age = rs.getString("age");
-					size = rs.getString("size");
-				}
-			} catch (SQLException e) {
-				// e.printStackTrace();
-			}
-			try {
-				makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female",
-						age, size);
-			} catch (IOException e) {
-				// e.printStackTrace();
-			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		}
+		try {
+			makeGUI(curID, name, house, fixed == 1 ? "Yes" : "No", stage, intake, gender == 1 ? "Male" : "Female", age,
+					size);
+		} catch (IOException e) {
+			// e.printStackTrace();
 		}
 	}
 
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
+
 		if (ids.size() > 0) {
 			i = curID;
 			s = name;
@@ -126,15 +134,7 @@ public class WishList extends JComponent {
 			});
 			this.add(nextButt);
 			nextButt.setBounds(273, 607, 173, 45);
-			nextButt.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					counter++;
-					if (counter >= max) {
-						counter = 1;
-					}
-				}
-			});
+
 			// Making the HTML in this block
 			String toInsert = exampleString.replaceFirst("R1", name);
 			String newy = toInsert.replaceFirst("R2", String.valueOf(gender));
