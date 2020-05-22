@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import DB_connect.ConnectionTHHS;
 
@@ -55,6 +56,10 @@ public class UserFrame extends JFrame {
 		}
 	}
 
+	private void closeFrames() {
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);				
+	}
+	
 	private void createFrame() {
 		
 		JMenuBar menu = new JMenuBar();
@@ -66,10 +71,10 @@ public class UserFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Close all JFrames and open a new main
-				
-				////////////////////////////////////////
-				}
+				closeFrames();
+				String[] args = new String[0];
+				Main.main(args);
+			}
 		});
 		
 		JLabel userLabel = new JLabel(this.userName);
@@ -208,4 +213,6 @@ public class UserFrame extends JFrame {
 		pan.add(viewWishListButton);
 		this.add(pan);
 	}
+	
+
 }

@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.WindowConstants;
 
 public class SearchFrame extends JFrame{
 
@@ -17,6 +18,10 @@ public class SearchFrame extends JFrame{
 		
 	}
 
+	private void closeFrames() {
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);				
+	}
+	
 	private void constructFrame() {
 		//Make a similar search table to the lab although looking at DBModifyingFrame is pretty close as well		
 		JMenuBar menu = new JMenuBar();
@@ -28,9 +33,9 @@ public class SearchFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Close all JFrames and open a new main
-				
-				////////////////////////////////////////
+				closeFrames();
+				String[] args = new String[0];
+				Main.main(args);
 				}
 		});
 		

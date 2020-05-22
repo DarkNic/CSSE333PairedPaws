@@ -29,6 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
 public class PetPage extends JComponent {
@@ -111,6 +112,11 @@ public class PetPage extends JComponent {
 		}
 	}
 
+	private void closeFrames() {
+		((JFrame) this.getParent()).setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);				
+	}
+	
+	
 	private void makeGUI(int curID, String name, int house, String fixed, String stage, String intake, String gender,
 			String age, String size) throws IOException {
 		i = curID;
@@ -130,8 +136,9 @@ public class PetPage extends JComponent {
 				logOut.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// Close all JFrames and open a new main
-						////////////////////////////////////////
+						closeFrames();
+						String[] args = new String[0];
+						Main.main(args);
 					}
 				});
 				account.addActionListener(new ActionListener() {
